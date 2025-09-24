@@ -1,9 +1,9 @@
 dataSource {
     pooled = true
     jmxExport = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
+    driverClassName = "com.mysql.cj.jdbc.Driver"
+    username = "todo_user"
+    password = "password"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -18,14 +18,17 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:mysql://localhost:3306/todo_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC"
         }
     }
     test {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            dbCreate = "create-drop" // Garante um banco de dados limpo para cada execução de teste
+            url = System.getProperty("test.datasource.url", "jdbc:mysql://localhost:3306/testdb")
+            username = System.getProperty("test.datasource.username", "testuser")
+            password = System.getProperty("test.datasource.password", "testpassword")
+            driverClassName = "com.mysql.jdbc.Driver"
         }
     }
     production {

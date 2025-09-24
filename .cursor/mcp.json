@@ -2,9 +2,18 @@
 	"mcpServers": {
 		"task-master-ai": {
 			"command": "npx",
-			"args": ["-y", "task-master-ai"],
+			"args": [
+				"-y",
+				"task-master-ai"
+			],
 			"env": {
 				"GOOGLE_API_KEY": "AIzaSyDwtESawv9s6LaeyhdpVAMuoAtIqCGw9Qc"
+			}
+		},
+		"context7": {
+			"url": "https://mcp.context7.com/mcp",
+			"headers": {
+				"CONTEXT7_API_KEY": "ctx7sk-dd7d1abf-3288-4ca0-965d-6863c3cb62ee"
 			}
 		}
 	}

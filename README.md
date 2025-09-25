@@ -37,6 +37,27 @@ docker-compose up -d db
 grails run-app
 ```
 
+## Comandos Makefile
+
+O projeto inclui um Makefile com comandos úteis para desenvolvimento e testes:
+
+```bash
+# Ver todos os comandos disponíveis
+make help
+
+# Desenvolvimento
+make dev-up     # Inicia ambiente de desenvolvimento
+make dev-down   # Para ambiente de desenvolvimento
+
+# Testes
+make test      # Executa todos os testes (unitários + integração)
+make test-unit # Executa apenas testes unitários
+
+# Utilitários
+make clean      # Limpa containers e volumes
+make logs       # Mostra logs do container de teste
+```
+
 ## Acesso
 
 - Interface Web: http://localhost:8080/todo-api

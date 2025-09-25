@@ -1,20 +1,20 @@
-# Research: Spock Framework Testing for Grails 2.5.6
+# Pesquisa: Testes com Spock Framework para Grails 2.5.6
 
-## Spock Framework 1.3-groovy-2.4 Configuration
+## Configuração do Spock Framework 1.3-groovy-2.4
 
-### Decision: Use Spock Framework 1.3-groovy-2.4 with Grails 2.5.6
-**Rationale**: 
-- Spock 1.3-groovy-2.4 is the latest version compatible with Groovy 2.4
-- Grails 2.5.6 requires Groovy 2.4, limiting Spock version options
-- Spock 1.3 provides full Given-When-Then structure and mocking capabilities
-- Compatible with Grails testing infrastructure
+### Decisão: Usar Spock Framework 1.3-groovy-2.4 com Grails 2.5.6
+**Justificativa**: 
+- Spock 1.3-groovy-2.4 é a versão mais recente compatível com Groovy 2.4
+- Grails 2.5.6 requer Groovy 2.4, limitando opções de versão do Spock
+- Spock 1.3 fornece estrutura Given-When-Then completa e capacidades de mocking
+- Compatível com infraestrutura de testes do Grails
 
-**Alternatives considered**:
-- Spock 2.x: Not compatible with Groovy 2.4
-- JUnit 4: Lacks Given-When-Then structure and Groovy integration
-- Spock 1.2: Older version with fewer features
+**Alternativas consideradas**:
+- Spock 2.x: Não compatível com Groovy 2.4
+- JUnit 4: Falta estrutura Given-When-Then e integração Groovy
+- Spock 1.2: Versão mais antiga com menos recursos
 
-### Configuration Requirements
+### Requisitos de Configuração
 ```groovy
 dependencies {
     testCompile 'org.spockframework:spock-core:1.3-groovy-2.4'
@@ -22,21 +22,21 @@ dependencies {
 }
 ```
 
-## TestContainers Integration with Grails 2.5.6
+## Integração TestContainers com Grails 2.5.6
 
-### Decision: Use TestContainers with MySQL 8.0 for integration tests
-**Rationale**:
-- Provides isolated database instances for each test
-- Compatible with Grails 2.5.6 through Spring integration
-- Ensures test reproducibility and isolation
-- Matches production database (MySQL 8.0)
+### Decisão: Usar TestContainers com MySQL 8.0 para testes de integração
+**Justificativa**:
+- Fornece instâncias de banco de dados isoladas para cada teste
+- Compatível com Grails 2.5.6 através de integração Spring
+- Garante reprodutibilidade e isolamento de testes
+- Combina com banco de dados de produção (MySQL 8.0)
 
-**Alternatives considered**:
-- H2 in-memory: Faster but different from production
-- Docker Compose: More complex setup, shared state issues
-- Mock database: Doesn't test real database interactions
+**Alternativas consideradas**:
+- H2 in-memory: Mais rápido mas diferente da produção
+- Docker Compose: Configuração mais complexa, problemas de estado compartilhado
+- Mock de banco: Não testa interações reais de banco de dados
 
-### Integration Pattern
+### Padrão de Integração
 ```groovy
 @Shared
 MySQLContainer mysql = new MySQLContainer("mysql:8.0")
@@ -46,54 +46,66 @@ MySQLContainer mysql = new MySQLContainer("mysql:8.0")
 
 def setupSpec() {
     mysql.start()
-    // Configure Grails DataSource for test
+    // Configurar DataSource do Grails para teste
 }
 ```
 
-## Given-When-Then Structure Best Practices
+## Melhores Práticas de Estrutura Given-When-Then
 
-### Decision: Implement structured Given-When-Then blocks with clear separation
-**Rationale**:
-- Improves test readability and maintainability
-- Makes test intent explicit
-- Follows Spock Framework conventions
-- Aligns with BDD principles
+### Decisão: Implementar blocos Given-When-Then estruturados com separação clara
+**Justificativa**:
+- Melhora legibilidade e manutenibilidade dos testes
+- Torna a intenção do teste explícita
+- Segue convenções do Spock Framework
+- Alinha com princípios BDD
 
-**Pattern**:
+**Padrão de Nomenclatura e Estrutura AAA**:
 ```groovy
-def "should create task with valid data"() {
-    given: "valid task data"
+def "createTask_WithValidData_ShouldReturnCreatedTask"() {
+    // ARRANGE - Preparar dados de teste
+    given: "dados válidos de tarefa"
         def taskData = [
             title: "Test Task",
             description: "Test Description",
             priority: TaskPriority.HIGH
         ]
     
-    when: "creating a new task"
+    // ACT - Executar ação sendo testada
+    when: "criando uma nova tarefa"
         def result = taskService.createTask(taskData)
     
-    then: "task should be created successfully"
+    // ASSERT - Verificar resultados
+    then: "tarefa deve ser criada com sucesso"
         result != null
         result.title == "Test Task"
         result.priority == TaskPriority.HIGH
 }
 ```
 
-## Random Data Generation for Test Isolation
+### Padrões de Nomenclatura Recomendados:
+- **Formato**: `nomeMetodo_Condicao_ResultadoEsperado`
+- **Exemplos**:
+  - `createTask_WithValidData_ShouldReturnCreatedTask`
+  - `createTask_WithEmptyTitle_ShouldThrowValidationException`
+  - `updateTask_WithExistingId_ShouldUpdateSuccessfully`
+  - `deleteTask_WithNonExistentId_ShouldThrowNotFoundException`
+  - `listTasks_WhenNoTasksExist_ShouldReturnEmptyList`
 
-### Decision: Use Groovy's RandomStringUtils and custom factories for test data
-**Rationale**:
-- Ensures test independence and prevents data conflicts
-- Reduces maintenance overhead of static test data
-- Improves test reliability across different environments
-- Allows for edge case testing with varied data
+## Geração de Dados Aleatórios para Isolamento de Testes
 
-**Alternatives considered**:
-- Static fixtures: Prone to conflicts and maintenance issues
-- Database seeding: Complex setup, shared state problems
-- External data files: Additional complexity, version control issues
+### Decisão: Usar RandomStringUtils do Groovy e factories customizadas para dados de teste
+**Justificativa**:
+- Garante independência dos testes e previne conflitos de dados
+- Reduz sobrecarga de manutenção de dados de teste estáticos
+- Melhora confiabilidade dos testes em diferentes ambientes
+- Permite teste de casos extremos com dados variados
 
-### Implementation Pattern
+**Alternativas consideradas**:
+- Fixtures estáticas: Propensas a conflitos e problemas de manutenção
+- Seeding de banco: Configuração complexa, problemas de estado compartilhado
+- Arquivos de dados externos: Complexidade adicional, problemas de controle de versão
+
+### Padrão de Implementação
 ```groovy
 class TaskTestFactory {
     static Task createValidTask(Map overrides = [:]) {
@@ -107,16 +119,16 @@ class TaskTestFactory {
 }
 ```
 
-## Grails 2.5.6 Testing Infrastructure
+## Infraestrutura de Testes do Grails 2.5.6
 
-### Decision: Leverage Grails built-in testing support with Spock
-**Rationale**:
-- Grails 2.5.6 has built-in support for Spock testing
-- Integrates with Grails application context and services
-- Provides transaction management for integration tests
-- Supports both unit and integration test categories
+### Decisão: Aproveitar suporte de testes integrado do Grails com Spock
+**Justificativa**:
+- Grails 2.5.6 tem suporte integrado para testes Spock
+- Integra com contexto de aplicação e serviços do Grails
+- Fornece gerenciamento de transação para testes de integração
+- Suporta categorias de teste unitário e integração
 
-### Configuration
+### Configuração
 ```groovy
 // BuildConfig.groovy
 grails.project.dependency.resolution = {
@@ -129,17 +141,17 @@ grails.project.dependency.resolution = {
 }
 ```
 
-## Performance Considerations
+## Considerações de Performance
 
-### Decision: Optimize test execution with parallel execution and cleanup
-**Rationale**:
-- Integration tests with TestContainers can be slow
-- Parallel execution reduces overall test time
-- Proper cleanup prevents resource leaks
-- Meets performance goals (< 30s for integration tests)
+### Decisão: Otimizar execução de testes com execução paralela e limpeza
+**Justificativa**:
+- Testes de integração com TestContainers podem ser lentos
+- Execução paralela reduz tempo total de teste
+- Limpeza adequada previne vazamentos de recursos
+- Atende objetivos de performance (< 30s para testes de integração)
 
-### Strategies
-- Use `@Shared` for expensive setup (database containers)
-- Implement proper cleanup in `cleanupSpec()`
-- Run unit tests in parallel with `grails test-app --parallel`
-- Use test-specific database schemas for isolation
+### Estratégias
+- Usar `@Shared` para configuração cara (containers de banco)
+- Implementar limpeza adequada em `cleanupSpec()`
+- Executar testes unitários em paralelo com `grails test-app --parallel`
+- Usar schemas de banco específicos para testes para isolamento

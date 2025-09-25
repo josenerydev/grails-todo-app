@@ -4,7 +4,7 @@ info:
   description: API REST para gerenciamento de tarefas
   version: 1.0.0
   contact:
-    name: TODO API Support
+    name: Suporte da TODO API
     email: support@todoapi.com
 
 servers:
@@ -17,7 +17,7 @@ paths:
       summary: Listar todas as tarefas
       description: Retorna uma lista de todas as tarefas
       tags:
-        - Tasks
+        - Tarefas
       responses:
         '200':
           description: Lista de tarefas retornada com sucesso
@@ -38,7 +38,7 @@ paths:
       summary: Criar nova tarefa
       description: Cria uma nova tarefa no sistema
       tags:
-        - Tasks
+        - Tarefas
       requestBody:
         required: true
         content:
@@ -70,7 +70,7 @@ paths:
       summary: Buscar tarefa por ID
       description: Retorna uma tarefa específica pelo ID
       tags:
-        - Tasks
+        - Tarefas
       parameters:
         - name: id
           in: path
@@ -103,7 +103,7 @@ paths:
       summary: Atualizar tarefa
       description: Atualiza uma tarefa existente
       tags:
-        - Tasks
+        - Tarefas
       parameters:
         - name: id
           in: path
@@ -148,7 +148,7 @@ paths:
       summary: Excluir tarefa
       description: Exclui uma tarefa do sistema
       tags:
-        - Tasks
+        - Tarefas
       parameters:
         - name: id
           in: path
@@ -178,7 +178,7 @@ paths:
       summary: Atualizar status da tarefa
       description: Atualiza apenas o status de uma tarefa
       tags:
-        - Tasks
+        - Tarefas
       parameters:
         - name: id
           in: path
@@ -224,7 +224,7 @@ paths:
       summary: Atualizar status de múltiplas tarefas
       description: Atualiza o status de várias tarefas em lote
       tags:
-        - Tasks
+        - Tarefas
       requestBody:
         required: true
         content:

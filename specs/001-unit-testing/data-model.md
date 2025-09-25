@@ -1,18 +1,18 @@
-# Data Model: TODO API Testing
+# Modelo de Dados: Testes da TODO API
 
-## Entities
+## Entidades
 
 ### Task
-**Purpose**: Core domain entity representing a task in the TODO system
+**Propósito**: Entidade de domínio principal representando uma tarefa no sistema TODO
 
-**Fields**:
-- `id` (Long): Primary key, auto-generated
-- `title` (String): Task title, required, max 255 characters
-- `description` (String): Task description, optional, max 1000 characters
-- `status` (TaskStatus): Task status, required, default PENDING
-- `priority` (TaskPriority): Task priority, required, default MEDIUM
-- `dateCreated` (Date): Creation timestamp, auto-generated
-- `lastUpdated` (Date): Last update timestamp, auto-generated
+**Campos**:
+- `id` (Long): Chave primária, gerada automaticamente
+- `title` (String): Título da tarefa, obrigatório, máximo 255 caracteres
+- `description` (String): Descrição da tarefa, opcional, máximo 1000 caracteres
+- `status` (TaskStatus): Status da tarefa, obrigatório, padrão PENDING
+- `priority` (TaskPriority): Prioridade da tarefa, obrigatório, padrão MEDIUM
+- `dateCreated` (Date): Timestamp de criação, gerado automaticamente
+- `lastUpdated` (Date): Timestamp da última atualização, gerado automaticamente
 
 **Constraints**:
 - `title`: blank: false, maxSize: 255
@@ -20,100 +20,100 @@
 - `status`: nullable: false
 - `priority`: nullable: false
 
-**Database Mapping**:
-- Table: `tasks`
-- Version: false (no optimistic locking)
-- Sort: dateCreated desc
+**Mapeamento do Banco de Dados**:
+- Tabela: `tasks`
+- Versão: false (sem bloqueio otimista)
+- Ordenação: dateCreated desc
 
-**State Transitions**:
-- PENDING → COMPLETED (via status update)
-- COMPLETED → PENDING (via status update)
+**Transições de Estado**:
+- PENDING → COMPLETED (via atualização de status)
+- COMPLETED → PENDING (via atualização de status)
 
 ### TaskStatus (Enum)
-**Purpose**: Represents possible task statuses
+**Propósito**: Representa os possíveis status de tarefa
 
-**Values**:
-- `PENDING` ("Pendente"): Task is not completed
-- `COMPLETED` ("Concluída"): Task is completed
+**Valores**:
+- `PENDING` ("Pendente"): Tarefa não está concluída
+- `COMPLETED` ("Concluída"): Tarefa está concluída
 
-**Properties**:
-- `displayName` (String): Human-readable name
-- `toString()`: Returns displayName
+**Propriedades**:
+- `displayName` (String): Nome legível por humanos
+- `toString()`: Retorna displayName
 
 ### TaskPriority (Enum)
-**Purpose**: Represents task priority levels
+**Propósito**: Representa os níveis de prioridade da tarefa
 
-**Values**:
-- `LOW` ("Baixa"): Low priority task
-- `MEDIUM` ("Média"): Medium priority task (default)
-- `HIGH` ("Alta"): High priority task
+**Valores**:
+- `LOW` ("Baixa"): Tarefa de baixa prioridade
+- `MEDIUM` ("Média"): Tarefa de prioridade média (padrão)
+- `HIGH` ("Alta"): Tarefa de alta prioridade
 
-**Properties**:
-- `displayName` (String): Human-readable name
-- `toString()`: Returns displayName
+**Propriedades**:
+- `displayName` (String): Nome legível por humanos
+- `toString()`: Retorna displayName
 
-## Validation Rules
+## Regras de Validação
 
-### Task Validation
-1. **Title Validation**:
-   - Must not be blank
-   - Maximum length: 255 characters
-   - Required for task creation
+### Validação de Task
+1. **Validação de Título**:
+   - Não deve estar em branco
+   - Comprimento máximo: 255 caracteres
+   - Obrigatório para criação de tarefa
 
-2. **Description Validation**:
-   - Optional field
-   - Maximum length: 1000 characters
-   - Can be null or empty
+2. **Validação de Descrição**:
+   - Campo opcional
+   - Comprimento máximo: 1000 caracteres
+   - Pode ser null ou vazio
 
-3. **Status Validation**:
-   - Must be valid TaskStatus enum value
-   - Cannot be null
-   - Default: PENDING
+3. **Validação de Status**:
+   - Deve ser valor válido do enum TaskStatus
+   - Não pode ser null
+   - Padrão: PENDING
 
-4. **Priority Validation**:
-   - Must be valid TaskPriority enum value
-   - Cannot be null
-   - Default: MEDIUM
+4. **Validação de Prioridade**:
+   - Deve ser valor válido do enum TaskPriority
+   - Não pode ser null
+   - Padrão: MEDIUM
 
-### Enum Validation
+### Validação de Enum
 1. **TaskStatus**:
-   - Only PENDING and COMPLETED are valid
-   - Case-sensitive enum values
-   - Display names are localized (Portuguese)
+   - Apenas PENDING e COMPLETED são válidos
+   - Valores de enum sensíveis a maiúsculas/minúsculas
+   - Nomes de exibição são localizados (Português)
 
 2. **TaskPriority**:
-   - Only LOW, MEDIUM, and HIGH are valid
-   - Case-sensitive enum values
-   - Display names are localized (Portuguese)
+   - Apenas LOW, MEDIUM e HIGH são válidos
+   - Valores de enum sensíveis a maiúsculas/minúsculas
+   - Nomes de exibição são localizados (Português)
 
-## Relationships
+## Relacionamentos
 
-### Task Self-Relationships
-- None (tasks are independent entities)
+### Auto-Relacionamentos de Task
+- Nenhum (tarefas são entidades independentes)
 
-### External Relationships
-- None (standalone TODO system)
+### Relacionamentos Externos
+- Nenhum (sistema TODO independente)
 
-## Test Data Requirements
+## Requisitos de Dados de Teste
 
-### Unit Test Data
-- Mock objects for isolated testing
-- Factory methods for consistent data creation
-- Random data generation for edge cases
+### Dados de Teste Unitário
+- Objetos mock para testes isolados
+- Métodos de factory para criação consistente de dados
+- Geração de dados aleatórios para casos extremos
 
-### Integration Test Data
-- Real database entities with TestContainers
-- Transaction rollback for test isolation
-- Cleanup between tests
+### Dados de Teste de Integração
+- Entidades reais de banco de dados com TestContainers
+- Rollback de transação para isolamento de testes
+- Limpeza entre testes
 
-### API Test Data
-- JSON request/response examples
-- Error scenario data
-- Batch operation data
+### Dados de Teste de API
+- Exemplos de requisição/resposta JSON
+- Dados de cenários de erro
+- Dados de operações em lote
 
-## Database Schema
+## Schema do Banco de Dados
 
-### Tasks Table
+### Tabela Tasks
 ```sql
 CREATE TABLE tasks (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -126,12 +126,12 @@ CREATE TABLE tasks (
 );
 ```
 
-### Indexes
-- Primary key: `id`
-- Sort index: `date_created` (descending)
+### Índices
+- Chave primária: `id`
+- Índice de ordenação: `date_created` (decrescente)
 
 ### Constraints
-- `title`: NOT NULL, max length 255
-- `description`: max length 1000
-- `status`: NOT NULL, enum values only
-- `priority`: NOT NULL, enum values only
+- `title`: NOT NULL, comprimento máximo 255
+- `description`: comprimento máximo 1000
+- `status`: NOT NULL, apenas valores de enum
+- `priority`: NOT NULL, apenas valores de enum

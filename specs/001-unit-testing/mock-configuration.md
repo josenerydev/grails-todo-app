@@ -42,14 +42,17 @@ class TaskServiceSpec extends Specification {
         Task.metaClass.static.delete = { Task task -> true }
     }
     
-    def "should list all tasks"() {
-        given: "no tasks exist"
+    def "listTasks_WhenNoTasksExist_ShouldReturnEmptyList"() {
+        // ARRANGE - Preparar estado inicial
+        given: "nenhuma tarefa existe"
         Task.metaClass.static.list = { Map params -> [] }
         
-        when: "listing all tasks"
+        // ACT - Executar ação sendo testada
+        when: "listando todas as tarefas"
         def result = service.listTasks()
         
-        then: "empty list is returned"
+        // ASSERT - Verificar resultado
+        then: "lista vazia é retornada"
         result.isEmpty()
     }
 }
@@ -70,15 +73,18 @@ class TaskControllerSpec extends Specification {
         controller.taskService = taskService
     }
     
-    def "should list tasks"() {
-        given: "some tasks exist"
+    def "index_WhenTasksExist_ShouldDisplayTasksInModel"() {
+        // ARRANGE - Preparar dados de teste
+        given: "algumas tarefas existem"
         def tasks = [new Task(title: "Test Task")]
         taskService.listTasks() >> tasks
         
-        when: "accessing index action"
+        // ACT - Executar ação sendo testada
+        when: "acessando ação index"
         controller.index()
         
-        then: "tasks are available in model"
+        // ASSERT - Verificar resultado
+        then: "tarefas estão disponíveis no modelo"
         model.tasks == tasks
     }
 }
@@ -113,6 +119,36 @@ class TaskTestFactory {
 }
 ```
 
+## Padrões de Nomenclatura de Testes
+
+### Formato Recomendado: `nomeMetodo_Condicao_ResultadoEsperado`
+
+**Exemplos de Nomenclatura**:
+- `createTask_WithValidData_ShouldReturnCreatedTask`
+- `createTask_WithEmptyTitle_ShouldThrowValidationException`
+- `updateTask_WithExistingId_ShouldUpdateSuccessfully`
+- `deleteTask_WithNonExistentId_ShouldThrowNotFoundException`
+- `listTasks_WhenNoTasksExist_ShouldReturnEmptyList`
+- `getTask_WithValidId_ShouldReturnTask`
+- `getTask_WithInvalidId_ShouldThrowNotFoundException`
+
+### Estrutura AAA (Arrange-Act-Assert)
+```groovy
+def "nomeMetodo_Condicao_ResultadoEsperado"() {
+    // ARRANGE - Preparar dados de teste
+    given: "descrição do estado inicial"
+        // configuração dos dados
+    
+    // ACT - Executar ação sendo testada
+    when: "descrição da ação"
+        // execução do método
+    
+    // ASSERT - Verificar resultados
+    then: "descrição do resultado esperado"
+        // verificações
+}
+```
+
 ## Benefícios da Estratégia
 
 1. **H2 In-Memory**: Testes de domínio rápidos e isolados
@@ -120,6 +156,7 @@ class TaskTestFactory {
 3. **Service Mocking**: Testes de controller isolados
 4. **Dados Aleatórios**: Evita dependências entre testes
 5. **Execução Rápida**: < 5 segundos para suite completa
+6. **Nomenclatura Clara**: Facilita identificação e manutenção dos testes
 
 ## Configuração de Dependências
 

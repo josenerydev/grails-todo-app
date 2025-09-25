@@ -1,82 +1,82 @@
-# Implementation Plan: Spock Unit Testing
+# Plano de Implementação: Testes de Unidade com Spock
 
-**Branch**: `001-unit-testing` | **Date**: 2025-01-24 | **Spec**: [link]
-**Input**: Feature specification from `/specs/001-unit-testing/spec.md`
+**Branch**: `001-unit-testing` | **Data**: 2025-01-24 | **Spec**: [link]
+**Entrada**: Especificação da funcionalidade de `/specs/001-unit-testing/spec.md`
 
-## Execution Flow (/plan command scope)
+## Fluxo de Execução (escopo do comando /plan)
 ```
-1. Load feature spec from Input path
-   → If not found: ERROR "No feature spec at {path}"
-2. Fill Technical Context (scan for NEEDS CLARIFICATION)
-   → Detect Project Type from context (web=frontend+backend, mobile=app+api)
-   → Set Structure Decision based on project type
-3. Fill the Constitution Check section based on the content of the constitution document.
-4. Evaluate Constitution Check section below
-   → If violations exist: Document in Complexity Tracking
-   → If no justification possible: ERROR "Simplify approach first"
-   → Update Progress Tracking: Initial Constitution Check
-5. Execute Phase 0 → research.md
-   → If NEEDS CLARIFICATION remain: ERROR "Resolve unknowns"
-6. Execute Phase 1 → contracts, data-model.md, quickstart.md, agent-specific template file (e.g., `CLAUDE.md` for Claude Code, `.github/copilot-instructions.md` for GitHub Copilot, `GEMINI.md` for Gemini CLI, `QWEN.md` for Qwen Code or `AGENTS.md` for opencode).
-7. Re-evaluate Constitution Check section
-   → If new violations: Refactor design, return to Phase 1
-   → Update Progress Tracking: Post-Design Constitution Check
-8. Plan Phase 2 → Describe task generation approach (DO NOT create tasks.md)
-9. STOP - Ready for /tasks command
+1. Carregar especificação da funcionalidade do caminho de entrada
+   → Se não encontrado: ERRO "Nenhuma especificação de funcionalidade em {caminho}"
+2. Preencher Contexto Técnico (procurar por NECESSITA ESCLARECIMENTO)
+   → Detectar Tipo de Projeto do contexto (web=frontend+backend, mobile=app+api)
+   → Definir Decisão de Estrutura baseada no tipo de projeto
+3. Preencher a seção Verificação da Constituição baseada no conteúdo do documento da constituição.
+4. Avaliar seção Verificação da Constituição abaixo
+   → Se violações existirem: Documentar em Rastreamento de Complexidade
+   → Se não for possível justificar: ERRO "Simplificar abordagem primeiro"
+   → Atualizar Rastreamento de Progresso: Verificação Inicial da Constituição
+5. Executar Fase 0 → research.md
+   → Se NECESSITA ESCLARECIMENTO permanecer: ERRO "Resolver incógnitas"
+6. Executar Fase 1 → contratos, data-model.md, quickstart.md, arquivo de template específico do agente (ex., `CLAUDE.md` para Claude Code, `.github/copilot-instructions.md` para GitHub Copilot, `GEMINI.md` para Gemini CLI, `QWEN.md` para Qwen Code ou `AGENTS.md` para opencode).
+7. Re-avaliar seção Verificação da Constituição
+   → Se novas violações: Refatorar design, retornar à Fase 1
+   → Atualizar Rastreamento de Progresso: Verificação Pós-Design da Constituição
+8. Planejar Fase 2 → Descrever abordagem de geração de tarefas (NÃO criar tasks.md)
+9. PARAR - Pronto para comando /tasks
 ```
 
-**IMPORTANT**: The /plan command STOPS at step 7. Phases 2-4 are executed by other commands:
-- Phase 2: /tasks command creates tasks.md
-- Phase 3-4: Implementation execution (manual or via tools)
+**IMPORTANTE**: O comando /plan PARA na etapa 7. As Fases 2-4 são executadas por outros comandos:
+- Fase 2: comando /tasks cria tasks.md
+- Fases 3-4: Execução da implementação (manual ou via ferramentas)
 
-## Summary
-Implementação de testes de unidade para aplicação TODO API usando Spock Framework, focando em validação da lógica de negócio e funcionalidades das classes existentes com mocking de dependências.
+## Resumo
+Implementação de testes de unidade para aplicação TODO API usando Spock Framework, focando na validação da lógica de negócio e funcionalidades das classes existentes com mocking de dependências.
 
-## Technical Context
-**Language/Version**: Groovy 2.4 / Java 8  
-**Primary Dependencies**: Spock Framework 1.3-groovy-2.4, H2 Database, GORM Mocking, Grails 2.5.6  
-**Storage**: H2 in-memory para testes de domínio, GORM mocking para serviços  
-**Testing**: Spock Framework com estrutura Given-When-Then  
-**Target Platform**: Linux server (WSL2)  
-**Project Type**: grails (single application with API + web interface)  
-**Performance Goals**: Testes de unidade < 5s  
-**Constraints**: Grails 2.5.6 fixo, compatibilidade com Groovy 2.4, cobertura mínima 80%  
-**Scale/Scope**: POC de sistema legado, ~6 classes de teste unitário  
+## Contexto Técnico
+**Linguagem/Versão**: Groovy 2.4 / Java 8  
+**Dependências Principais**: Spock Framework 1.3-groovy-2.4, H2 Database, GORM Mocking, Grails 2.5.6  
+**Armazenamento**: H2 in-memory para testes de domínio, GORM mocking para serviços  
+**Testes**: Spock Framework com estrutura Given-When-Then  
+**Plataforma Alvo**: Servidor Linux (WSL2)  
+**Tipo de Projeto**: grails (aplicação única com API + interface web)  
+**Objetivos de Performance**: Testes de unidade < 5s  
+**Restrições**: Grails 2.5.6 fixo, compatibilidade com Groovy 2.4, cobertura mínima 80%  
+**Escala/Escopo**: POC de sistema legado, ~6 classes de teste unitário  
 
-## Constitution Check
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+## Verificação da Constituição
+*PORTÃO: Deve passar antes da pesquisa da Fase 0. Re-verificar após o design da Fase 1.*
 
-### Test-First Development (NON-NEGOTIABLE)
-✅ **PASS**: TDD obrigatório implementado - todos os testes serão escritos antes da implementação usando Spock Framework
+### Desenvolvimento Test-First (NÃO NEGOCIÁVEL)
+✅ **PASSOU**: TDD obrigatório implementado - todos os testes serão escritos antes da implementação usando Spock Framework
 
-### Spock Framework Testing Standards  
-✅ **PASS**: Estrutura Given-When-Then obrigatória definida, testes de unidade e integração especificados
+### Padrões de Teste do Spock Framework  
+✅ **PASSOU**: Estrutura Given-When-Then obrigatória definida, testes de unidade e integração especificados
 
-### Legacy System Preservation
-✅ **PASS**: Grails 2.5.6 mantido, compatibilidade com versões antigas preservada
+### Preservação do Sistema Legado
+✅ **PASSOU**: Grails 2.5.6 mantido, compatibilidade com versões antigas preservada
 
-### Docker-First Infrastructure
-✅ **PASS**: MySQL via Docker Compose para desenvolvimento, H2 in-memory para testes unitários
+### Infraestrutura Docker-First
+✅ **PASSOU**: MySQL via Docker Compose para desenvolvimento, H2 in-memory para testes unitários
 
-### API Contract Stability
-✅ **PASS**: Endpoints REST existentes mantidos, novos testes validam contratos
+### Estabilidade do Contrato da API
+✅ **PASSOU**: Endpoints REST existentes mantidos, novos testes validam contratos
 
-## Project Structure
+## Estrutura do Projeto
 
-### Documentation (this feature)
+### Documentação (esta funcionalidade)
 ```
 specs/001-unit-testing/
-├── plan.md              # This file (/plan command output)
-├── research.md          # Phase 0 output (/plan command)
-├── data-model.md        # Phase 1 output (/plan command)
-├── quickstart.md        # Phase 1 output (/plan command)
-├── contracts/           # Phase 1 output (/plan command)
-└── tasks.md             # Phase 2 output (/tasks command - NOT created by /plan)
+├── plan.md              # Este arquivo (saída do comando /plan)
+├── research.md          # Saída da Fase 0 (comando /plan)
+├── data-model.md        # Saída da Fase 1 (comando /plan)
+├── quickstart.md        # Saída da Fase 1 (comando /plan)
+├── contracts/           # Saída da Fase 1 (comando /plan)
+└── tasks.md             # Saída da Fase 2 (comando /tasks - NÃO criado por /plan)
 ```
 
-### Source Code (repository root)
+### Código Fonte (raiz do repositório)
 ```
-# Grails 2.5.6 application structure
+# Estrutura da aplicação Grails 2.5.6
 grails-app/
 ├── domain/todoapi/
 │   └── Task.groovy
@@ -95,118 +95,118 @@ src/groovy/todoapi/
 └── TaskPriority.groovy
 
 test/
-└── unit/todoapi/          # To be created
+└── unit/todoapi/          # A ser criado
 ```
 
-**Structure Decision**: Grails 2.5.6 single application (API + web interface)
+**Decisão de Estrutura**: Aplicação única Grails 2.5.6 (API + interface web)
 
-## Phase 0: Outline & Research
-1. **Extract unknowns from Technical Context** above:
-   - Spock Framework 1.3-groovy-2.4 configuration for Grails 2.5.6
-   - H2 in-memory database configuration for unit tests
-   - GORM mocking strategies for service tests
-   - Best practices for Given-When-Then structure in Spock
-   - Random data generation patterns for test isolation
-   - Mocking strategies for Grails services and controllers
+## Fase 0: Esboço e Pesquisa
+1. **Extrair incógnitas do Contexto Técnico** acima:
+   - Configuração do Spock Framework 1.3-groovy-2.4 para Grails 2.5.6
+   - Configuração do banco de dados H2 in-memory para testes unitários
+   - Estratégias de mocking do GORM para testes de serviço
+   - Melhores práticas para estrutura Given-When-Then no Spock
+   - Padrões de geração de dados aleatórios para isolamento de testes
+   - Estratégias de mocking para serviços e controladores Grails
 
-2. **Generate and dispatch research agents**:
+2. **Gerar e despachar agentes de pesquisa**:
    ```
-   Task: "Research Spock Framework 1.3-groovy-2.4 configuration for Grails 2.5.6"
-   Task: "Research H2 in-memory database configuration for unit tests"
-   Task: "Research GORM mocking strategies for service tests"
-   Task: "Research best practices for Given-When-Then structure in Spock"
-   Task: "Find random data generation patterns for test isolation"
-   Task: "Research mocking strategies for Grails services and controllers"
+   Tarefa: "Pesquisar configuração do Spock Framework 1.3-groovy-2.4 para Grails 2.5.6"
+   Tarefa: "Pesquisar configuração do banco de dados H2 in-memory para testes unitários"
+   Tarefa: "Pesquisar estratégias de mocking do GORM para testes de serviço"
+   Tarefa: "Pesquisar melhores práticas para estrutura Given-When-Then no Spock"
+   Tarefa: "Encontrar padrões de geração de dados aleatórios para isolamento de testes"
+   Tarefa: "Pesquisar estratégias de mocking para serviços e controladores Grails"
    ```
 
-3. **Consolidate findings** in `research.md` using format:
-   - Decision: [what was chosen]
-   - Rationale: [why chosen]
-   - Alternatives considered: [what else evaluated]
+3. **Consolidar descobertas** em `research.md` usando formato:
+   - Decisão: [o que foi escolhido]
+   - Justificativa: [por que escolhido]
+   - Alternativas consideradas: [o que mais foi avaliado]
 
-**Output**: research.md with all NEEDS CLARIFICATION resolved
+**Saída**: research.md com todos os NECESSITA ESCLARECIMENTO resolvidos
 
-## Phase 1: Design & Contracts
-*Prerequisites: research.md complete*
+## Fase 1: Design e Contratos
+*Pré-requisitos: research.md completo*
 
-1. **Extract entities from feature spec** → `data-model.md`:
-   - Task entity with constraints and relationships
-   - TaskStatus and TaskPriority enums
-   - Validation rules from requirements
+1. **Extrair entidades da especificação da funcionalidade** → `data-model.md`:
+   - Entidade Task com constraints e relacionamentos
+   - Enums TaskStatus e TaskPriority
+   - Regras de validação dos requisitos
 
-2. **Generate unit test scenarios** from functional requirements:
-   - Domain validation scenarios
-   - Service method testing scenarios
-   - Controller action testing scenarios
-   - Error handling scenarios
+2. **Gerar cenários de teste unitário** dos requisitos funcionais:
+   - Cenários de validação de domínio
+   - Cenários de teste de métodos de serviço
+   - Cenários de teste de ações de controlador
+   - Cenários de tratamento de erro
 
-3. **Extract test data requirements**:
-   - Random data generation patterns
-   - Mock object creation
-   - Test isolation strategies
-   - H2 in-memory database setup
-   - GORM mocking configuration
+3. **Extrair requisitos de dados de teste**:
+   - Padrões de geração de dados aleatórios
+   - Criação de objetos mock
+   - Estratégias de isolamento de testes
+   - Configuração do banco de dados H2 in-memory
+   - Configuração de mocking do GORM
 
-4. **Update agent file incrementally** (O(1) operation):
-   - Run `.specify/scripts/bash/update-agent-context.sh cursor`
-   - Add Spock Framework + H2 + GORM mocking context
-   - Update recent changes (keep last 3)
-   - Keep under 150 lines for token efficiency
+4. **Atualizar arquivo do agente incrementalmente** (operação O(1)):
+   - Executar `.specify/scripts/bash/update-agent-context.sh cursor`
+   - Adicionar contexto Spock Framework + H2 + GORM mocking
+   - Atualizar mudanças recentes (manter últimas 3)
+   - Manter abaixo de 150 linhas para eficiência de tokens
 
-**Output**: data-model.md, quickstart.md, agent-specific file
+**Saída**: data-model.md, quickstart.md, arquivo específico do agente
 
-## Phase 2: Task Planning Approach
-*This section describes what the /tasks command will do - DO NOT execute during /plan*
+## Fase 2: Abordagem de Planejamento de Tarefas
+*Esta seção descreve o que o comando /tasks fará - NÃO executar durante /plan*
 
-**Task Generation Strategy**:
-- Load `.specify/templates/tasks-template.md` as base
-- Generate tasks from Phase 1 design docs (data model, quickstart)
-- Each entity → unit test task [P] (H2 in-memory)
-- Each service method → unit test task [P] (GORM mocking)
-- Each controller action → unit test task [P] (Service mocking)
-- Test data factory creation tasks
-- H2 and GORM mocking configuration tasks
+**Estratégia de Geração de Tarefas**:
+- Carregar `.specify/templates/tasks-template.md` como base
+- Gerar tarefas dos documentos de design da Fase 1 (modelo de dados, quickstart)
+- Cada entidade → tarefa de teste unitário [P] (H2 in-memory)
+- Cada método de serviço → tarefa de teste unitário [P] (mocking GORM)
+- Cada ação de controlador → tarefa de teste unitário [P] (mocking de serviço)
+- Tarefas de criação de factory de dados de teste
+- Tarefas de configuração de mocking H2 e GORM
 
-**Ordering Strategy**:
-- Setup tasks first (dependencies, H2, GORM mocking, structure)
-- Test data factory before unit tests
-- Unit tests in parallel (independent files)
-- Mark [P] for parallel execution (independent files)
+**Estratégia de Ordenação**:
+- Tarefas de configuração primeiro (dependências, H2, mocking GORM, estrutura)
+- Factory de dados de teste antes dos testes unitários
+- Testes unitários em paralelo (arquivos independentes)
+- Marcar [P] para execução paralela (arquivos independentes)
 
-**Estimated Output**: 12-17 numbered, ordered tasks in tasks.md
+**Saída Estimada**: 12-17 tarefas numeradas e ordenadas em tasks.md
 
-**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
+**IMPORTANTE**: Esta fase é executada pelo comando /tasks, NÃO por /plan
 
-## Phase 3+: Future Implementation
-*These phases are beyond the scope of the /plan command*
+## Fase 3+: Implementação Futura
+*Essas fases estão além do escopo do comando /plan*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)  
-**Phase 4**: Implementation (execute tasks.md following constitutional principles)  
-**Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
+**Fase 3**: Execução de tarefas (comando /tasks cria tasks.md)  
+**Fase 4**: Implementação (executar tasks.md seguindo princípios constitucionais)  
+**Fase 5**: Validação (executar testes, executar quickstart.md, validação de performance)
 
-## Complexity Tracking
-*Fill ONLY if Constitution Check has violations that must be justified*
+## Rastreamento de Complexidade
+*Preencher APENAS se Verificação da Constituição tiver violações que devem ser justificadas*
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
+| Violação | Por que Necessário | Alternativa Mais Simples Rejeitada Porque |
 |-----------|------------|-------------------------------------|
 | N/A | N/A | N/A |
 
-## Progress Tracking
-*This checklist is updated during execution flow*
+## Rastreamento de Progresso
+*Esta lista de verificação é atualizada durante o fluxo de execução*
 
-**Phase Status**:
-- [x] Phase 0: Research complete (/plan command)
-- [x] Phase 1: Design complete (/plan command)
-- [x] Phase 2: Task planning complete (/plan command - describe approach only)
-- [x] Phase 3: Tasks generated (/tasks command)
-- [ ] Phase 4: Implementation complete
-- [ ] Phase 5: Validation passed
+**Status das Fases**:
+- [x] Fase 0: Pesquisa completa (comando /plan)
+- [x] Fase 1: Design completo (comando /plan)
+- [x] Fase 2: Planejamento de tarefas completo (comando /plan - descrever abordagem apenas)
+- [x] Fase 3: Tarefas geradas (comando /tasks)
+- [ ] Fase 4: Implementação completa
+- [ ] Fase 5: Validação aprovada
 
-**Gate Status**:
-- [x] Initial Constitution Check: PASS
-- [x] Post-Design Constitution Check: PASS
-- [x] All NEEDS CLARIFICATION resolved
-- [x] Complexity deviations documented
+**Status dos Portões**:
+- [x] Verificação Inicial da Constituição: PASSOU
+- [x] Verificação Pós-Design da Constituição: PASSOU
+- [x] Todos os NECESSITA ESCLARECIMENTO resolvidos
+- [x] Desvios de complexidade documentados
 
 ---
-*Based on Constitution v1.0.0 - See `/memory/constitution.md`*
+*Baseado na Constituição v1.0.0 - Ver `/memory/constitution.md`*

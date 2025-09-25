@@ -1,165 +1,218 @@
-# Tasks: Spock Unit Testing
+# Tarefas: Testes de Unidade com Spock
 
-**Input**: Design documents from `/specs/001-unit-testing/`
-**Prerequisites**: plan.md (required), research.md, data-model.md
+**Entrada**: Documentos de design de `/specs/001-unit-testing/`
+**Pré-requisitos**: plan.md (obrigatório), research.md, data-model.md
 
-## Execution Flow (main)
+## Fluxo de Execução (principal)
 ```
-1. Load plan.md from feature directory
-   → If not found: ERROR "No implementation plan found"
-   → Extract: tech stack, libraries, structure
-2. Load optional design documents:
-   → data-model.md: Extract entities → model tasks
-   → contracts/: Each file → contract test task
-   → research.md: Extract decisions → setup tasks
-3. Generate tasks by category:
-   → Setup: project init, dependencies, linting
-   → Tests: contract tests, integration tests
-   → Core: models, services, CLI commands
-   → Integration: DB, middleware, logging
-   → Polish: unit tests, performance, docs
-4. Apply task rules:
-   → Different files = mark [P] for parallel
-   → Same file = sequential (no [P])
-   → Tests before implementation (TDD)
-5. Number tasks sequentially (T001, T002...)
-6. Generate dependency graph
-7. Create parallel execution examples
-8. Validate task completeness:
-   → All contracts have tests?
-   → All entities have models?
-   → All endpoints implemented?
-9. Return: SUCCESS (tasks ready for execution)
-```
-
-## Format: `[ID] [P?] Description`
-- **[P]**: Can run in parallel (different files, no dependencies)
-- Include exact file paths in descriptions
-
-## Path Conventions
-- **Grails project**: `grails-app/`, `test/` at repository root
-- **Test structure**: `test/unit/`, `test/integration/`
-- **Configuration**: `grails-app/conf/`
-
-## Phase 3.1: Setup
-- [ ] T001 Configure Spock Framework dependencies in grails-app/conf/BuildConfig.groovy
-- [ ] T002 Configure H2 in-memory database for unit tests in grails-app/conf/BuildConfig.groovy
-- [ ] T003 Configure GORM mocking dependencies in grails-app/conf/BuildConfig.groovy
-- [ ] T004 [P] Create test directory structure (test/unit/todoapi/)
-- [ ] T005 [P] Create TaskTestFactory for random data generation in test/unit/todoapi/TaskTestFactory.groovy
-
-## Phase 3.2: Unit Tests (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
-**CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-
-### Domain Tests (H2 in-memory)
-- [ ] T006 [P] Task domain unit tests in test/unit/todoapi/TaskSpec.groovy
-- [ ] T007 [P] TaskStatus enum tests in test/unit/todoapi/TaskStatusSpec.groovy
-- [ ] T008 [P] TaskPriority enum tests in test/unit/todoapi/TaskPrioritySpec.groovy
-
-### Service Tests (GORM mocking)
-- [ ] T009 [P] TaskService unit tests in test/unit/todoapi/TaskServiceSpec.groovy
-
-### Controller Tests (Service mocking)
-- [ ] T010 [P] TaskController unit tests in test/unit/todoapi/TaskControllerSpec.groovy
-- [ ] T011 [P] TaskRestController unit tests in test/unit/todoapi/TaskRestControllerSpec.groovy
-
-## Phase 3.3: Test Verification (ONLY after tests are failing)
-**NOTE: All core classes already exist - focus on making tests pass**
-- [ ] T012 [P] Verify Task domain validation constraints work correctly with H2
-- [ ] T013 [P] Verify TaskStatus enum with displayName works correctly
-- [ ] T014 [P] Verify TaskPriority enum with displayName works correctly
-- [ ] T015 [P] Verify TaskService CRUD operations work correctly with GORM mocking
-- [ ] T016 [P] Verify TaskController web actions work correctly with service mocking
-- [ ] T017 [P] Verify TaskRestController API endpoints work correctly with service mocking
-
-## Phase 3.4: Polish
-*Removed for simplicity - focus on core unit testing only*
-
-## Dependencies
-- Tests (T006-T011) before verification (T012-T017)
-- T004 blocks all test creation (T006-T011)
-- T005 blocks T006-T011 (TaskTestFactory needed for unit tests)
-- T002 blocks T006-T008 (H2 needed for domain tests)
-- T003 blocks T009 (GORM mocking needed for service tests)
-
-## Parallel Example
-```
-# Launch T006-T011 together (Unit Tests):
-Task: "Task domain unit tests in test/unit/todoapi/TaskSpec.groovy"
-Task: "TaskStatus enum tests in test/unit/todoapi/TaskStatusSpec.groovy"
-Task: "TaskPriority enum tests in test/unit/todoapi/TaskPrioritySpec.groovy"
-Task: "TaskService unit tests in test/unit/todoapi/TaskServiceSpec.groovy"
-Task: "TaskController unit tests in test/unit/todoapi/TaskControllerSpec.groovy"
-Task: "TaskRestController unit tests in test/unit/todoapi/TaskRestControllerSpec.groovy"
-
-# Launch T012-T017 together (Test Verification):
-Task: "Verify Task domain validation constraints work correctly with H2"
-Task: "Verify TaskStatus enum with displayName works correctly"
-Task: "Verify TaskPriority enum with displayName works correctly"
-Task: "Verify TaskService CRUD operations work correctly with GORM mocking"
-Task: "Verify TaskController web actions work correctly with service mocking"
-Task: "Verify TaskRestController API endpoints work correctly with service mocking"
+1. Carregar plan.md do diretório da funcionalidade
+   → Se não encontrado: ERRO "Nenhum plano de implementação encontrado"
+   → Extrair: stack tecnológico, bibliotecas, estrutura
+2. Carregar documentos de design opcionais:
+   → data-model.md: Extrair entidades → tarefas de modelo
+   → contracts/: Cada arquivo → tarefa de teste de contrato
+   → research.md: Extrair decisões → tarefas de configuração
+3. Gerar tarefas por categoria:
+   → Configuração: inicialização do projeto, dependências, linting
+   → Testes: testes de contrato, testes de integração
+   → Core: modelos, serviços, comandos CLI
+   → Integração: DB, middleware, logging
+   → Polimento: testes unitários, performance, docs
+4. Aplicar regras de tarefas:
+   → Arquivos diferentes = marcar [P] para paralelo
+   → Mesmo arquivo = sequencial (sem [P])
+   → Testes antes da implementação (TDD)
+5. Numerar tarefas sequencialmente (T001, T002...)
+6. Gerar grafo de dependências
+7. Criar exemplos de execução paralela
+8. Validar completude das tarefas:
+   → Todos os contratos têm testes?
+   → Todas as entidades têm modelos?
+   → Todos os endpoints implementados?
+9. Retornar: SUCESSO (tarefas prontas para execução)
 ```
 
-## Test Coverage Requirements
-- **Unit Tests**: All domain classes, services, controllers
-- **Domain Tests**: Validation constraints, business logic (H2 in-memory)
-- **Service Tests**: CRUD operations, business rules (GORM mocking)
-- **Controller Tests**: Web actions, REST endpoints, error handling (Service mocking)
-- **Performance**: < 5s execution time
-- **Coverage**: Focus on core functionality testing
+## Formato: `[ID] [P?] Descrição`
+- **[P]**: Pode executar em paralelo (arquivos diferentes, sem dependências)
+- Incluir caminhos exatos de arquivos nas descrições
 
-## Spock Framework Requirements
-- **Structure**: Given-When-Then blocks in all tests
-- **Mocking**: Use Spock mocking for unit tests
-- **Data**: Random data generation with TaskTestFactory
-- **Isolation**: Mocking for dependency isolation
-- **Database**: H2 in-memory for domain tests, GORM mocking for services
-- **Parallel**: Support parallel test execution
+## Convenções de Caminho
+- **Projeto Grails**: `grails-app/`, `test/` na raiz do repositório
+- **Estrutura de teste**: `test/unit/`, `test/integration/`
+- **Configuração**: `grails-app/conf/`
 
-## Notes
-- [P] tasks = different files, no dependencies
-- All core classes already exist - focus on testing existing functionality
-- Unit tests only - no integration tests or TestContainers
-- H2 in-memory for domain tests, GORM mocking for services
-- Simplified scope - no polish tasks (T018-T022 removed)
-- Verify tests fail before implementing
-- Commit after each task
-- Follow TDD cycle: Red → Green → Refactor
-- Use Spock Framework 1.3-groovy-2.4
-- Maintain Grails 2.5.6 compatibility
-- Enums are located in src/groovy/todoapi/ (not grails-app/)
+## Fase 3.1: Configuração
+- [ ] T001 Configurar dependências do Spock Framework em grails-app/conf/BuildConfig.groovy
+- [ ] T002 Configurar banco de dados H2 in-memory para testes unitários em grails-app/conf/BuildConfig.groovy
+- [ ] T003 Configurar dependências de mocking do GORM em grails-app/conf/BuildConfig.groovy
+- [ ] T004 [P] Criar estrutura de diretórios de teste (test/unit/todoapi/)
+- [ ] T005 [P] Criar TaskTestFactory para geração de dados aleatórios em test/unit/todoapi/TaskTestFactory.groovy
 
-## Task Generation Rules
-*Applied during main() execution*
+## Fase 3.2: Testes de Unidade (TDD) ⚠️ DEVE COMPLETAR ANTES DE 3.3
+**CRÍTICO: Estes testes DEVEM ser escritos e DEVEM FALHAR antes de QUALQUER implementação**
 
-1. **From Data Model**:
-   - Task entity → unit test task [P]
-   - TaskStatus enum → unit test task [P]
-   - TaskPriority enum → unit test task [P]
+### Testes de Domínio (H2 in-memory)
+- [ ] T006 [P] Testes unitários do domínio Task em test/unit/todoapi/TaskSpec.groovy
+- [ ] T007 [P] Testes do enum TaskStatus em test/unit/todoapi/TaskStatusSpec.groovy
+- [ ] T008 [P] Testes do enum TaskPriority em test/unit/todoapi/TaskPrioritySpec.groovy
+
+### Testes de Serviço (mocking GORM)
+- [ ] T009 [P] Testes unitários do TaskService em test/unit/todoapi/TaskServiceSpec.groovy
+
+### Testes de Controlador (mocking de serviço)
+- [ ] T010 [P] Testes unitários do TaskController em test/unit/todoapi/TaskControllerSpec.groovy
+- [ ] T011 [P] Testes unitários do TaskRestController em test/unit/todoapi/TaskRestControllerSpec.groovy
+
+## Fase 3.3: Verificação dos Testes (APENAS após os testes falharem)
+**NOTA: Todas as classes principais já existem - focar em fazer os testes passarem**
+- [ ] T012 [P] Verificar se as constraints de validação do domínio Task funcionam corretamente com H2
+- [ ] T013 [P] Verificar se o enum TaskStatus com displayName funciona corretamente
+- [ ] T014 [P] Verificar se o enum TaskPriority com displayName funciona corretamente
+- [ ] T015 [P] Verificar se as operações CRUD do TaskService funcionam corretamente com mocking GORM
+- [ ] T016 [P] Verificar se as ações web do TaskController funcionam corretamente com mocking de serviço
+- [ ] T017 [P] Verificar se os endpoints da API do TaskRestController funcionam corretamente com mocking de serviço
+
+## Fase 3.4: Polimento
+*Removido para simplicidade - focar apenas nos testes unitários principais*
+
+## Dependências
+- Testes (T006-T011) antes da verificação (T012-T017)
+- T004 bloqueia toda criação de testes (T006-T011)
+- T005 bloqueia T006-T011 (TaskTestFactory necessário para testes unitários)
+- T002 bloqueia T006-T008 (H2 necessário para testes de domínio)
+- T003 bloqueia T009 (mocking GORM necessário para testes de serviço)
+
+## Exemplo Paralelo
+```
+# Lançar T006-T011 juntos (Testes de Unidade):
+Tarefa: "Testes unitários do domínio Task em test/unit/todoapi/TaskSpec.groovy"
+Tarefa: "Testes do enum TaskStatus em test/unit/todoapi/TaskStatusSpec.groovy"
+Tarefa: "Testes do enum TaskPriority em test/unit/todoapi/TaskPrioritySpec.groovy"
+Tarefa: "Testes unitários do TaskService em test/unit/todoapi/TaskServiceSpec.groovy"
+Tarefa: "Testes unitários do TaskController em test/unit/todoapi/TaskControllerSpec.groovy"
+Tarefa: "Testes unitários do TaskRestController em test/unit/todoapi/TaskRestControllerSpec.groovy"
+
+# Lançar T012-T017 juntos (Verificação dos Testes):
+Tarefa: "Verificar se as constraints de validação do domínio Task funcionam corretamente com H2"
+Tarefa: "Verificar se o enum TaskStatus com displayName funciona corretamente"
+Tarefa: "Verificar se o enum TaskPriority com displayName funciona corretamente"
+Tarefa: "Verificar se as operações CRUD do TaskService funcionam corretamente com mocking GORM"
+Tarefa: "Verificar se as ações web do TaskController funcionam corretamente com mocking de serviço"
+Tarefa: "Verificar se os endpoints da API do TaskRestController funcionam corretamente com mocking de serviço"
+```
+
+## Requisitos de Cobertura de Testes
+- **Testes de Unidade**: Todas as classes de domínio, serviços, controladores
+- **Testes de Domínio**: Constraints de validação, lógica de negócio (H2 in-memory)
+- **Testes de Serviço**: Operações CRUD, regras de negócio (mocking GORM)
+- **Testes de Controlador**: Ações web, endpoints REST, tratamento de erros (mocking de serviço)
+- **Performance**: < 5s tempo de execução
+- **Cobertura**: Foco no teste de funcionalidades principais
+
+## Requisitos do Spock Framework
+- **Estrutura**: Blocos Given-When-Then em todos os testes
+- **Mocking**: Usar mocking do Spock para testes unitários
+- **Dados**: Geração de dados aleatórios com TaskTestFactory
+- **Isolamento**: Mocking para isolamento de dependências
+- **Banco de Dados**: H2 in-memory para testes de domínio, mocking GORM para serviços
+- **Paralelo**: Suporte a execução paralela de testes
+- **Nomenclatura**: Padrão `nomeMetodo_Condicao_ResultadoEsperado`
+- **Estrutura AAA**: Comentários ARRANGE-ACT-ASSERT em todos os testes
+
+## Padrões de Nomenclatura de Testes
+
+### Formato Obrigatório: `nomeMetodo_Condicao_ResultadoEsperado`
+
+**Exemplos para cada classe**:
+
+#### TaskService
+- `createTask_WithValidData_ShouldReturnCreatedTask`
+- `createTask_WithEmptyTitle_ShouldThrowValidationException`
+- `updateTask_WithExistingId_ShouldUpdateSuccessfully`
+- `deleteTask_WithNonExistentId_ShouldThrowNotFoundException`
+- `listTasks_WhenNoTasksExist_ShouldReturnEmptyList`
+- `getTask_WithValidId_ShouldReturnTask`
+
+#### TaskController
+- `index_WhenTasksExist_ShouldDisplayTasksInModel`
+- `create_WithValidData_ShouldRedirectToIndex`
+- `create_WithInvalidData_ShouldShowValidationErrors`
+- `edit_WithValidId_ShouldShowEditForm`
+- `update_WithValidData_ShouldRedirectToIndex`
+
+#### TaskRestController
+- `getTasks_WhenCalled_ShouldReturnJsonList`
+- `getTask_WithValidId_ShouldReturnJsonTask`
+- `createTask_WithValidJson_ShouldReturnCreatedTask`
+- `updateTask_WithValidData_ShouldReturnUpdatedTask`
+- `deleteTask_WithValidId_ShouldReturnNoContent`
+
+#### Task Domain
+- `validate_WithValidData_ShouldPassValidation`
+- `validate_WithEmptyTitle_ShouldFailValidation`
+- `validate_WithLongTitle_ShouldFailValidation`
+
+### Estrutura AAA Obrigatória
+```groovy
+def "nomeMetodo_Condicao_ResultadoEsperado"() {
+    // ARRANGE - Preparar dados de teste
+    given: "descrição do estado inicial"
+        // configuração dos dados
+    
+    // ACT - Executar ação sendo testada
+    when: "descrição da ação"
+        // execução do método
+    
+    // ASSERT - Verificar resultados
+    then: "descrição do resultado esperado"
+        // verificações
+}
+```
+
+## Notas
+- Tarefas [P] = arquivos diferentes, sem dependências
+- Todas as classes principais já existem - focar no teste de funcionalidades existentes
+- Apenas testes unitários - sem testes de integração ou TestContainers
+- H2 in-memory para testes de domínio, mocking GORM para serviços
+- Escopo simplificado - sem tarefas de polimento (T018-T022 removidas)
+- Verificar se os testes falham antes de implementar
+- Commit após cada tarefa
+- Seguir ciclo TDD: Vermelho → Verde → Refatorar
+- Usar Spock Framework 1.3-groovy-2.4
+- Manter compatibilidade com Grails 2.5.6
+- Enums estão localizados em src/groovy/todoapi/ (não em grails-app/)
+- **OBRIGATÓRIO**: Seguir padrão de nomenclatura e estrutura AAA em todos os testes
+
+## Regras de Geração de Tarefas
+*Aplicadas durante execução main()*
+
+1. **Do Modelo de Dados**:
+   - Entidade Task → tarefa de teste unitário [P]
+   - Enum TaskStatus → tarefa de teste unitário [P]
+   - Enum TaskPriority → tarefa de teste unitário [P]
    
-2. **From Existing Classes**:
-   - TaskService → unit test task [P]
-   - TaskController → unit test task [P]
-   - TaskRestController → unit test task [P]
+2. **Das Classes Existentes**:
+   - TaskService → tarefa de teste unitário [P]
+   - TaskController → tarefa de teste unitário [P]
+   - TaskRestController → tarefa de teste unitário [P]
    
-3. **From Requirements**:
-   - Validation scenarios → unit test task [P]
-   - Error handling → unit test task [P]
+3. **Dos Requisitos**:
+   - Cenários de validação → tarefa de teste unitário [P]
+   - Tratamento de erros → tarefa de teste unitário [P]
 
-4. **Ordering**:
-   - Setup → Tests → Verification
-   - Dependencies block parallel execution
+4. **Ordenação**:
+   - Configuração → Testes → Verificação
+   - Dependências bloqueiam execução paralela
 
-## Validation Checklist
-*GATE: Checked by main() before returning*
+## Lista de Verificação de Validação
+*PORTÃO: Verificado por main() antes de retornar*
 
-- [x] All entities have unit test tasks
-- [x] All existing classes have unit test tasks
-- [x] All tests come before verification
-- [x] Parallel tasks truly independent
-- [x] Each task specifies exact file path
-- [x] No task modifies same file as another [P] task
-- [x] Spock Framework requirements met
-- [x] Unit testing only (no integration)
-- [x] Simplified scope (no polish tasks)
+- [x] Todas as entidades têm tarefas de teste unitário
+- [x] Todas as classes existentes têm tarefas de teste unitário
+- [x] Todos os testes vêm antes da verificação
+- [x] Tarefas paralelas verdadeiramente independentes
+- [x] Cada tarefa especifica caminho exato do arquivo
+- [x] Nenhuma tarefa modifica o mesmo arquivo que outra tarefa [P]
+- [x] Requisitos do Spock Framework atendidos
+- [x] Apenas testes unitários (sem integração)
+- [x] Escopo simplificado (sem tarefas de polimento)

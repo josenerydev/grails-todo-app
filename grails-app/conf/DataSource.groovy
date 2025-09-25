@@ -25,10 +25,11 @@ environments {
     test {
         dataSource {
             dbCreate = "create-drop" // Garante um banco de dados limpo para cada execução de teste
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-            driverClassName = "org.h2.Driver"
-            username = "sa"
-            password = ""
+            // Usar MySQL via Docker Compose se configurado, senão H2
+            url = System.getProperty("grails.datasource.url") ?: "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            driverClassName = System.getProperty("grails.datasource.driverClassName") ?: "org.h2.Driver"
+            username = System.getProperty("grails.datasource.username") ?: "sa"
+            password = System.getProperty("grails.datasource.password") ?: ""
         }
     }
     production {

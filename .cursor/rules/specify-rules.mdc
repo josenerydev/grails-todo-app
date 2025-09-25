@@ -1,0 +1,25 @@
+# todo-api Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-09-25
+
+## Active Technologies
+- Groovy 2.4 / Java 8 + Grails 2.5.6, TestContainers 1.17.6, MySQL 8.0, Spock Framework 1.0-groovy-2.4 (003-fix-integration-tests-setup)
+
+## Project Structure
+```
+backend/
+frontend/
+tests/
+```
+
+## Commands
+# Add commands for Groovy 2.4 / Java 8
+
+## Code Style
+Groovy 2.4 / Java 8: Follow standard conventions
+
+## Recent Changes
+- 003-fix-integration-tests-setup: Added Groovy 2.4 / Java 8 + Grails 2.5.6, TestContainers 1.17.6, MySQL 8.0, Spock Framework 1.0-groovy-2.4
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

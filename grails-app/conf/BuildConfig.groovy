@@ -59,6 +59,15 @@ grails.project.dependency.resolution = {
         
         // GORM Testing Support
         test 'org.grails:grails-datastore-test-support:1.0.2-grails-2.4'
+        
+        // TestContainers para testes de integração (versão compatível com Java 8)
+        test 'org.testcontainers:testcontainers:1.15.3'
+        test 'org.testcontainers:mysql:1.15.3'
+        test 'org.testcontainers:spock:1.15.3'
+        
+        // HTTP Client para testes de API
+        test 'org.apache.httpcomponents:httpclient:4.5.13'
+        test 'org.apache.httpcomponents:httpmime:4.5.13'
     }
 
     plugins {
@@ -75,6 +84,9 @@ grails.project.dependency.resolution = {
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
+        
+        // plugins for testing
+        // test ":coverage:1.2.7" // Plugin de cobertura não disponível para Grails 2.5.6
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

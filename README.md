@@ -90,8 +90,68 @@ grails war
 # Testes unitários com cobertura
 grails test-app unit: -coverage
 
-# Todos os testes
-grails test-app
+# Testes de integração com TestContainers
+grails test-app integration: -coverage
+
+# Todos os testes (unitários + integração)
+grails test-app -coverage
+
+# Executar apenas testes de integração específicos
+grails test-app integration:todoapi.TaskCrudIntegrationSpec
+grails test-app integration:todoapi.TaskValidationIntegrationSpec
+grails test-app integration:todoapi.TaskBatchIntegrationSpec
+grails test-app integration:todoapi.TaskApiIntegrationSpec
+```
+
+## Testes de Integração
+
+Os testes de integração utilizam TestContainers para criar um ambiente isolado com MySQL 8.0, garantindo que os testes sejam executados contra um banco de dados real.
+
+### Características dos Testes de Integração
+
+- **TestContainers**: MySQL 8.0 via Docker
+- **Spock Framework**: Estrutura Given-When-Then
+- **Isolamento**: Cada classe de teste tem seu próprio container
+- **Performance**: Execução em <30 segundos
+- **Cobertura**: Testa todos os endpoints da API REST
+
+### Tipos de Testes
+
+1. **CRUD Integration Tests** (`TaskCrudIntegrationSpec`)
+   - Listar tarefas
+   - Criar tarefa
+   - Buscar tarefa
+   - Atualizar tarefa
+   - Excluir tarefa
+
+2. **Validation Integration Tests** (`TaskValidationIntegrationSpec`)
+   - Validação de dados de entrada
+   - Validação de status e prioridade
+   - Tratamento de erros HTTP
+
+3. **Batch Operations Tests** (`TaskBatchIntegrationSpec`)
+   - Atualização de status em lote
+   - Validação de operações em lote
+
+4. **Contract Tests** (`TaskApiIntegrationSpec`)
+   - Conformidade com contrato OpenAPI
+   - Estrutura de respostas JSON
+   - Códigos de status HTTP
+
+### Executando Testes de Integração
+
+```bash
+# Todos os testes de integração
+grails test-app integration: -coverage
+
+# Teste específico
+grails test-app integration:todoapi.TaskCrudIntegrationSpec
+
+# Com logs detalhados
+grails test-app integration: -coverage -verbose
+
+# Apenas testes que falharam
+grails test-app integration: -coverage -rerun
 ```
 
 ## Estrutura do Projeto
@@ -106,7 +166,10 @@ todo-api/
 │   ├── services/todoapi/        # Serviços
 │   └── views/                   # Views
 ├── src/groovy/todoapi/          # Enums
-└── test/unit/todoapi/           # Testes unitários
+├── test/
+│   ├── unit/todoapi/            # Testes unitários
+│   └── integration/todoapi/     # Testes de integração
+└── specs/                       # Especificações e documentação
 ```
 
 ## Modelo de Dados

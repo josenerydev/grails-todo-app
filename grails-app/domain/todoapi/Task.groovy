@@ -29,4 +29,18 @@ class Task {
     String toString() {
         return title
     }
+    
+    @Override
+    boolean equals(Object obj) {
+        if (this.is(obj)) return true
+        if (obj == null || getClass() != obj.getClass()) return false
+        
+        Task task = (Task) obj
+        return id != null ? id.equals(task.id) : task.id == null
+    }
+    
+    @Override
+    int hashCode() {
+        return id != null ? id.hashCode() : 0
+    }
 }

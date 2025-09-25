@@ -53,7 +53,7 @@ class TaskService {
     Task updateTask(Long id, Map params) {
         Task task = Task.get(id)
         if (!task) {
-            throw new RuntimeException("Tarefa não encontrada com ID: ${id}")
+            return null
         }
         
         task.title = params.title ?: task.title
@@ -64,7 +64,7 @@ class TaskService {
         if (task.save(flush: true)) {
             return task
         } else {
-            throw new RuntimeException("Erro ao atualizar tarefa: ${task.errors}")
+            return null
         }
     }
 
@@ -76,7 +76,7 @@ class TaskService {
     boolean deleteTask(Long id) {
         Task task = Task.get(id)
         if (!task) {
-            throw new RuntimeException("Tarefa não encontrada com ID: ${id}")
+            return false
         }
         
         task.delete(flush: true)
@@ -92,14 +92,14 @@ class TaskService {
     Task updateTaskStatus(Long id, TaskStatus status) {
         Task task = Task.get(id)
         if (!task) {
-            throw new RuntimeException("Tarefa não encontrada com ID: ${id}")
+            return null
         }
         
         task.status = status
         if (task.save(flush: true)) {
             return task
         } else {
-            throw new RuntimeException("Erro ao atualizar status da tarefa: ${task.errors}")
+            return null
         }
     }
 

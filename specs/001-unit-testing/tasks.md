@@ -42,26 +42,26 @@
 - **Configuração**: `grails-app/conf/`
 
 ## Fase 3.1: Configuração
-- [ ] T001 Configurar dependências do Spock Framework em grails-app/conf/BuildConfig.groovy
-- [ ] T002 Configurar banco de dados H2 in-memory para testes unitários em grails-app/conf/BuildConfig.groovy
-- [ ] T003 Configurar dependências de mocking do GORM em grails-app/conf/BuildConfig.groovy
-- [ ] T004 [P] Criar estrutura de diretórios de teste (test/unit/todoapi/)
-- [ ] T005 [P] Criar TaskTestFactory para geração de dados aleatórios em test/unit/todoapi/TaskTestFactory.groovy
+- [x] T001 Configurar dependências do Spock Framework em grails-app/conf/BuildConfig.groovy
+- [x] T002 Configurar banco de dados H2 in-memory para testes unitários em grails-app/conf/BuildConfig.groovy
+- [x] T003 Configurar dependências de mocking do GORM em grails-app/conf/BuildConfig.groovy
+- [x] T004 [P] Criar estrutura de diretórios de teste (test/unit/todoapi/)
+- [x] T005 [P] Criar TaskTestFactory para geração de dados aleatórios em test/unit/todoapi/TaskTestFactory.groovy
 
 ## Fase 3.2: Testes de Unidade (TDD) ⚠️ DEVE COMPLETAR ANTES DE 3.3
 **CRÍTICO: Estes testes DEVEM ser escritos e DEVEM FALHAR antes de QUALQUER implementação**
 
 ### Testes de Domínio (H2 in-memory)
-- [ ] T006 [P] Testes unitários do domínio Task em test/unit/todoapi/TaskSpec.groovy
-- [ ] T007 [P] Testes do enum TaskStatus em test/unit/todoapi/TaskStatusSpec.groovy
-- [ ] T008 [P] Testes do enum TaskPriority em test/unit/todoapi/TaskPrioritySpec.groovy
+- [x] T006 [P] Testes unitários do domínio Task em test/unit/todoapi/TaskSpec.groovy
+- [x] T007 [P] Testes do enum TaskStatus em test/unit/todoapi/TaskStatusSpec.groovy
+- [x] T008 [P] Testes do enum TaskPriority em test/unit/todoapi/TaskPrioritySpec.groovy
 
 ### Testes de Serviço (mocking GORM)
-- [ ] T009 [P] Testes unitários do TaskService em test/unit/todoapi/TaskServiceSpec.groovy
+- [x] T009 [P] Testes unitários do TaskService em test/unit/todoapi/TaskServiceSpec.groovy
 
 ### Testes de Controlador (mocking de serviço)
-- [ ] T010 [P] Testes unitários do TaskController em test/unit/todoapi/TaskControllerSpec.groovy
-- [ ] T011 [P] Testes unitários do TaskRestController em test/unit/todoapi/TaskRestControllerSpec.groovy
+- [x] T010 [P] Testes unitários do TaskController em test/unit/todoapi/TaskControllerSpec.groovy
+- [x] T011 [P] Testes unitários do TaskRestController em test/unit/todoapi/TaskRestControllerSpec.groovy
 
 ## Fase 3.3: Verificação dos Testes (APENAS após os testes falharem)
 **NOTA: Todas as classes principais já existem - focar em fazer os testes passarem**

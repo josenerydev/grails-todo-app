@@ -25,10 +25,10 @@ environments {
     test {
         dataSource {
             dbCreate = "create-drop" // Garante um banco de dados limpo para cada execução de teste
-            url = System.getProperty("test.datasource.url", "jdbc:mysql://localhost:3306/testdb")
-            username = System.getProperty("test.datasource.username", "testuser")
-            password = System.getProperty("test.datasource.password", "testpassword")
-            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
         }
     }
     production {

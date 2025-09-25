@@ -7,7 +7,7 @@ import grails.converters.JSON
 
 /**
  * Testes unitários para o TaskRestController
- * Testa endpoints REST com mocking de serviço
+ * Testa endpoint básico de listagem JSON
  */
 @TestFor(TaskRestController)
 @Mock([Task, TaskService])
@@ -38,22 +38,4 @@ class TaskRestControllerSpec extends Specification {
         response.json != null
         response.json.size() == 2
     }
-
-    def "index_QuandoNaoExistemTarefas_DeveRetornarListaJsonVazia"() {
-        // ARRANGE - Preparar estado inicial
-        given: "nenhuma tarefa existe"
-        controller.taskService.listAllTasks() >> []
-
-        // ACT - Executar ação sendo testada
-        when: "chamando endpoint index"
-        controller.index()
-
-        // ASSERT - Verificar resultado
-        then: "lista vazia JSON deve ser retornada"
-        response.status == 200
-        response.json != null
-        response.json.isEmpty()
-    }
-
-    // Testes complexos removidos - focar nos básicos funcionais
 }

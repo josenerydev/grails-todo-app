@@ -1,50 +1,94 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# TODO API - POC Grails 2.5.6 Constitution
+
+<!-- Sync Impact Report:
+Version change: 0.0.0 → 1.0.0
+Modified principles: N/A (initial creation)
+Added sections: Legacy System Constraints, Spock Testing Framework, Docker Integration
+Removed sections: N/A
+Templates requiring updates: ✅ constitution.md / ⚠ pending (plan-template.md, spec-template.md, tasks-template.md)
+Follow-up TODOs: N/A
+-->
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Test-First Development (NON-NEGOTIABLE)
+TDD obrigatório para toda funcionalidade: Escrever testes → Aprovação do usuário → Testes falham → Implementar → Refatorar. Ciclo Red-Green-Refactor estritamente aplicado. Todos os testes devem ser escritos usando Spock Framework antes da implementação.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Spock Framework Testing Standards
+Todos os testes de unidade DEVEM usar Spock Framework. Testes de unidade para lógica de negócio isolada com mocking de dependências. Estrutura Given-When-Then obrigatória para legibilidade e manutenibilidade.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Legacy System Preservation
+Esta é uma POC de sistema legado Grails 2.5.6. Manter compatibilidade com versões antigas é prioritário. Mudanças breaking devem ser justificadas e documentadas. Preservar funcionalidades existentes durante refatorações.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Docker-First Infrastructure
+Banco de dados MySQL via Docker Compose é obrigatório para desenvolvimento. Ambiente de desenvolvimento deve ser reproduzível via `docker-compose up -d db` e `grails run-app`. Testes de unidade não requerem banco de dados.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. API Contract Stability
+Endpoints REST existentes devem manter compatibilidade. Novos endpoints seguem padrões RESTful. Versionamento de API quando necessário. Documentação de contratos obrigatória.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Legacy System Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Technology Stack Requirements
+- **Grails 2.5.6** (versão fixa, não atualizar)
+- **Groovy 2.4** (compatibilidade com Grails 2.5.6)
+- **Java 8** (requisito mínimo para Grails 2.5.6)
+- **MySQL 8.0** (via Docker Compose)
+- **Spock Framework 1.3-groovy-2.4** (compatível com Groovy 2.4)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### Database Migration Strategy
+Mudanças no banco devem usar Grails Database Migration Plugin. Scripts de migração obrigatórios para todas as alterações de schema. Rollback deve ser sempre possível.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Spock Testing Framework
+
+### Unit Testing Requirements
+- Testes de unidade para Services, Controllers e Domain classes
+- Mocking de dependências externas obrigatório
+- Cobertura mínima de 80% para lógica de negócio
+- Estrutura Given-When-Then em todos os testes
+
+### Unit Testing Requirements
+- Testes de unidade para validação de lógica de negócio
+- Mocking de dependências para isolamento
+- Testes de validação de constraints e regras
+- Validação de métodos de serviços e controladores
+
+### Test Organization
+```
+test/
+└── unit/
+    └── todoapi/
+        ├── TaskSpec.groovy
+        ├── TaskServiceSpec.groovy
+        ├── TaskControllerSpec.groovy
+        ├── TaskRestControllerSpec.groovy
+        ├── TaskStatusSpec.groovy
+        ├── TaskPrioritySpec.groovy
+        └── TaskTestFactory.groovy
+```
+
+## Development Workflow
+
+### Code Quality Gates
+- Todos os testes DEVEM passar antes do commit
+- Cobertura de testes mínima de 80%
+- Linting com Grails CodeNarc (se configurado)
+- Code review obrigatório para mudanças em Services e Controllers
+
+### Testing Workflow
+1. Escrever teste Spock unitário (Given-When-Then)
+2. Executar teste (deve falhar)
+3. Verificar funcionalidade existente
+4. Refatorar mantendo testes passando
+5. Executar suite completa de testes unitários
+
+### Docker Development Environment
+- Banco sempre via `docker-compose up -d db`
+- Aplicação via `grails run-app`
+- Testes de unidade sem dependência de banco
+- Logs centralizados via Docker Compose
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Esta constituição supera todas as outras práticas do projeto. Emendas requerem documentação, aprovação e plano de migração. Todos os PRs/reviews devem verificar conformidade. Complexidade deve ser justificada. Use README.md para orientação de desenvolvimento em tempo de execução.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-01-24 | **Last Amended**: 2025-01-24

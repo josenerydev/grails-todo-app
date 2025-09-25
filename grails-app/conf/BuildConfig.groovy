@@ -83,7 +83,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.1"
         
         // plugins for testing
-        // test ":coverage:1.2.7" // Plugin de cobertura não disponível para Grails 2.5.6
+        test ":code-coverage:2.0.3-2" // Plugin de cobertura para Grails 2.5.6
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
@@ -91,4 +91,17 @@ grails.project.dependency.resolution = {
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
     }
+}
+
+// Configuração do plugin de cobertura
+coverage {
+    exclusions = [
+        '**/grails/app/conf/**',
+        '**/grails/app/views/**',
+        '**/grails/app/controllers/**/*Controller.groovy',
+        '**/grails/app/domain/**/*Constraints.groovy',
+        '**/grails/app/utils/**',
+        '**/grails/app/taglib/**',
+        '**/grails/app/services/**/*Service.groovy'
+    ]
 }

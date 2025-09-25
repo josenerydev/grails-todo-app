@@ -271,8 +271,19 @@ textarea {
 
 input[type=checkbox], input[type=radio] {
 	background-color: transparent;
-	border: 0;
+	border: 1px solid #ced4da;
 	padding: 0;
+}
+
+/* Preservar estilo dos checkboxes Bootstrap */
+.form-check-input {
+	background-color: #fff;
+	border: 1px solid #ced4da;
+}
+
+.form-check-input:checked {
+	background-color: #0d6efd;
+	border-color: #0d6efd;
 }
 
 input:focus, select:focus, textarea:focus {

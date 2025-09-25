@@ -43,17 +43,29 @@
 </g:if>
 
 <!-- Batch Actions -->
-<div class="row mb-3">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <button id="markCompletedBtn" class="btn btn-success" disabled>
-                    <i class="bi bi-check-circle me-1"></i>Marcar como Concluído
-                </button>
+<g:if test="${taskList && !taskList.empty}">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="bi bi-info-circle text-info"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <small class="text-muted">
+                                <strong>Dica:</strong> Selecione as tarefas usando os checkboxes e use o botão abaixo para marcar múltiplas tarefas como concluídas.
+                            </small>
+                        </div>
+                        <button id="markCompletedBtn" class="btn btn-success" disabled>
+                            <i class="bi bi-check-circle me-1"></i>Marcar Selecionadas como Concluídas
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</g:if>
 
 <!-- Tasks List -->
 <g:if test="${taskList && !taskList.empty}">
@@ -82,12 +94,12 @@
                                 </td>
                                 <td class="fw-bold">${task.title}</td>
                                 <td>
-                                    <span class="badge ${task.status == 'COMPLETED' ? 'bg-success' : 'bg-warning text-dark'}">
+                                    <span class="badge ${task.status.name() == 'COMPLETED' ? 'bg-success' : 'bg-secondary'}">
                                         ${task.status}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge ${task.priority == 'HIGH' ? 'bg-danger' : task.priority == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-secondary'}">
+                                    <span class="badge ${task.priority.name() == 'HIGH' ? 'bg-danger' : task.priority.name() == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-info'}">
                                         ${task.priority}
                                     </span>
                                 </td>
@@ -153,12 +165,12 @@
                     </div>
                     <div class="row g-2">
                         <div class="col-6">
-                            <span class="badge w-100 ${task.status == 'COMPLETED' ? 'bg-success' : 'bg-warning text-dark'}">
+                            <span class="badge w-100 ${task.status.name() == 'COMPLETED' ? 'bg-success' : 'bg-secondary'}">
                                 ${task.status}
                             </span>
                         </div>
                         <div class="col-6">
-                            <span class="badge w-100 ${task.priority == 'HIGH' ? 'bg-danger' : task.priority == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-secondary'}">
+                            <span class="badge w-100 ${task.priority.name() == 'HIGH' ? 'bg-danger' : task.priority.name() == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-info'}">
                                 ${task.priority}
                             </span>
                         </div>
@@ -205,9 +217,9 @@ $(document).ready(function() {
         
         // Atualizar texto do botão com quantidade selecionada
         if (checkedCount > 0) {
-            $('#markCompletedBtn').html('<i class="bi bi-check-circle me-1"></i>Marcar como Concluído (' + checkedCount + ')');
+            $('#markCompletedBtn').html('<i class="bi bi-check-circle me-1"></i>Marcar Selecionadas como Concluídas (' + checkedCount + ')');
         } else {
-            $('#markCompletedBtn').html('<i class="bi bi-check-circle me-1"></i>Marcar como Concluído');
+            $('#markCompletedBtn').html('<i class="bi bi-check-circle me-1"></i>Marcar Selecionadas como Concluídas');
         }
     }
     
@@ -235,9 +247,10 @@ $(document).ready(function() {
                 success: function(response) {
                     if (response.success) {
                         showToast('Sucesso', 'Tarefas atualizadas com sucesso!', 'success');
+                        // Recarregar imediatamente após sucesso
                         setTimeout(function() {
-                            location.reload();
-                        }, 1500);
+                            window.location.reload();
+                        }, 1000);
                     } else {
                         showToast('Erro', 'Erro ao atualizar tarefas: ' + (response.message || 'Erro desconhecido.'), 'danger');
                     }

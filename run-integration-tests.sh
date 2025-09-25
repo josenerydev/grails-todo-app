@@ -37,11 +37,7 @@ fi
 
 echo "MySQL está rodando!"
 
-# 4. Executar script de inicialização
-echo "Executando script de inicialização..."
-docker exec -i todo-mysql-test mysql -u root -ppassword < docker-entrypoint-initdb.d/init.sql
-
-# 5. Executar testes de integração com MySQL
+# 4. Executar testes de integração com MySQL
 echo "Executando testes de integração com MySQL..."
 GRAILS_OPTS="-Dgrails.datasource.url=jdbc:mysql://localhost:3307/todo_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true -Dgrails.datasource.username=todo_user -Dgrails.datasource.password=password -Dgrails.datasource.driverClassName=com.mysql.cj.jdbc.Driver" grails test-app integration: -coverage
 

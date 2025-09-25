@@ -236,6 +236,9 @@ $(document).ready(function() {
         }
 
         if (confirm('Tem certeza que deseja marcar as tarefas selecionadas como CONCLUÍDAS?')) {
+            // Desabilitar botão durante a requisição
+            $('#markCompletedBtn').prop('disabled', true).html('<i class="bi bi-hourglass-split me-1"></i>Processando...');
+            
             $.ajax({
                 url: '${g.createLink(controller: 'task', action: 'batchUpdateStatus')}',
                 type: 'POST',
@@ -245,18 +248,48 @@ $(document).ready(function() {
                     newStatus: 'COMPLETED'
                 }),
                 success: function(response) {
-                    if (response.success) {
-                        showToast('Sucesso', 'Tarefas atualizadas com sucesso!', 'success');
-                        // Recarregar imediatamente após sucesso
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 1000);
-                    } else {
-                        showToast('Erro', 'Erro ao atualizar tarefas: ' + (response.message || 'Erro desconhecido.'), 'danger');
+                    console.log('Resposta da API:', response);
+                    try {
+                        // Tentar parsear a resposta se for string
+                        if (typeof response === 'string') {
+                            response = JSON.parse(response);
+                        }
+                        
+                        if (response && response.success) {
+                            showToast('Sucesso', 'Tarefas atualizadas com sucesso!', 'success');
+                            // Recarregar página após sucesso - múltiplas tentativas
+                            setTimeout(function() {
+                                console.log('Recarregando página...');
+                                window.location.reload();
+                            }, 1000);
+                            
+                            // Fallback: forçar recarregamento após 3 segundos
+                            setTimeout(function() {
+                                console.log('Fallback: forçando recarregamento...');
+                                window.location.href = window.location.href;
+                            }, 3000);
+                        } else {
+                            showToast('Erro', 'Erro ao atualizar tarefas: ' + (response ? response.message : 'Resposta inválida'), 'danger');
+                            // Reabilitar botão em caso de erro
+                            updateMarkCompletedButton();
+                        }
+                    } catch (e) {
+                        console.error('Erro ao processar resposta:', e);
+                        showToast('Erro', 'Erro ao processar resposta do servidor', 'danger');
+                        updateMarkCompletedButton();
                     }
                 },
                 error: function(xhr, status, error) {
-                    showToast('Erro', 'Erro na requisição: ' + xhr.responseText, 'danger');
+                    console.error('Erro na requisição:', xhr, status, error);
+                    showToast('Erro', 'Erro na requisição: ' + (xhr.responseText || error), 'danger');
+                    // Reabilitar botão em caso de erro
+                    updateMarkCompletedButton();
+                },
+                complete: function() {
+                    // Garantir que o botão seja reabilitado após a requisição
+                    setTimeout(function() {
+                        updateMarkCompletedButton();
+                    }, 2000);
                 }
             });
         }

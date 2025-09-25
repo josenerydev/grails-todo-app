@@ -1,0 +1,163 @@
+# PRD: Implementação de Testes de Unidade com Spock Framework - Análise Real
+
+## Visão Geral
+Implementar uma suíte completa de testes de unidade para a API de TODO usando o Spock Framework, baseado na análise real da aplicação Grails 2.5.6 existente.
+
+## Análise da Aplicação Real
+
+### Estrutura Atual Identificada
+- **Domain**: `Task.groovy` - Classe principal com constraints e mapping
+- **Enums**: `TaskStatus` (PENDING, COMPLETED) e `TaskPriority` (LOW, MEDIUM, HIGH)
+- **Service**: `TaskService.groovy` - Lógica de negócio completa
+- **Controllers**: 
+  - `TaskController.groovy` - Interface web com conversões de displayName
+  - `TaskRestController.groovy` - API REST completa
+- **Configuração**: Grails 2.5.6, Hibernate 4.3.10, MySQL
+
+### Funcionalidades Identificadas
+- **CRUD Completo**: Criar, ler, atualizar e deletar tarefas
+- **Operações em Lote**: Atualização de status de múltiplas tarefas
+- **Conversões**: DisplayName para enums e vice-versa
+- **Tratamento de Erros**: Robusto com mensagens específicas
+- **API REST**: Endpoints completos com códigos HTTP apropriados
+- **Interface Web**: Flash messages e redirecionamentos
+
+## Objetivos de Teste
+
+### Classes de Domínio
+- **Task**: Validações, constraints, toString()
+- **TaskStatus**: Validação de valores e displayName
+- **TaskPriority**: Validação de valores e displayName
+
+### Services
+- **TaskService**: Todos os métodos CRUD, operações em lote, tratamento de erros
+
+### Controllers
+- **TaskController**: Ações web, conversões, flash messages, redirecionamentos
+- **TaskRestController**: Endpoints REST, códigos HTTP, tratamento de erros
+
+## Requisitos Técnicos
+
+### Framework e Versões
+- **Grails**: 2.5.6 (já configurado)
+- **Spock Framework**: 1.3-groovy-2.4 (compatível com Grails 2.5.6)
+- **JUnit**: 4.12 (para compatibilidade)
+- **Groovy**: 2.4.x (compatível com Grails 2.5.6)
+
+### Estrutura de Testes
+- Testes organizados em `test/unit/` seguindo a estrutura do projeto
+- Separação clara entre testes unitários e de integração
+- Uso de mocks para isolamento de dependências
+- Configuração de dados de teste reutilizáveis
+
+### Padrões de Teste
+- **Given-When-Then**: Estrutura padrão para todos os testes
+- **Naming Convention**: Nomes descritivos em português
+- **Mocking Strategy**: Spock mocks para dependências
+- **Data-Driven Testing**: @Unroll para testes parametrizados
+
+## Funcionalidades Específicas a Testar
+
+### Task Domain
+- Constraints: title (blank: false, maxSize: 255), description (nullable: true, maxSize: 1000)
+- Valores padrão: status = PENDING, priority = MEDIUM
+- Mapping: table 'tasks', version false, sort dateCreated: 'desc'
+- toString() method
+
+### TaskService
+- `listAllTasks()`: Retorna lista de todas as tarefas
+- `getTaskById(Long id)`: Busca por ID, retorna null se não encontrado
+- `createTask(Map params)`: Criação com validação, lança exceção em caso de erro
+- `updateTask(Long id, Map params)`: Atualização com validação, lança exceção se não encontrado
+- `deleteTask(Long id)`: Exclusão, lança exceção se não encontrado
+- `updateTaskStatus(Long id, TaskStatus status)`: Atualização apenas do status
+- `updateTasksStatusBatch(List<Long> taskIds, TaskStatus newStatus)`: Atualização em lote
+
+### TaskController (Web)
+- `index()`: Lista todas as tarefas
+- `show()`: Exibe tarefa específica, redireciona se não encontrada
+- `create()`: Formulário de criação
+- `save()`: Salva nova tarefa, conversão de priority, tratamento de erros
+- `edit()`: Formulário de edição
+- `update()`: Atualiza tarefa, conversões de status e priority
+- `delete()`: Exclui tarefa
+- `batchUpdateStatus()`: Atualização em lote via JSON
+- Métodos privados: `convertStatusToEnum()`, `convertPriorityToEnum()`
+
+### TaskRestController (API)
+- `index()`: GET /api/tasks - Lista todas as tarefas
+- `show()`: GET /api/tasks/:id - Busca por ID, 404 se não encontrado
+- `save()`: POST /api/tasks - Cria nova tarefa, 201 em sucesso
+- `update()`: PUT /api/tasks/:id - Atualiza tarefa, 404 se não encontrado
+- `delete()`: DELETE /api/tasks/:id - Exclui tarefa, 204 em sucesso
+- `updateStatus()`: PATCH /api/tasks/:id/status - Atualiza apenas status
+
+### Enums
+- **TaskStatus**: PENDING("Pendente"), COMPLETED("Concluída")
+- **TaskPriority**: LOW("Baixa"), MEDIUM("Média"), HIGH("Alta")
+- Testar valores, displayName, toString()
+
+## Configurações Necessárias
+
+### BuildConfig.groovy
+- Adicionar dependência do Spock Framework
+- Configurar versões compatíveis
+- Manter configuração existente do MySQL
+
+### Configuração de Testes
+- Arquivo de configuração específico para testes
+- Configuração de banco de dados H2 em memória
+- Configuração de logging para testes
+
+### Mocks e Stubs
+- Configuração de mocks para TaskService nos controllers
+- Stubs para dependências de infraestrutura
+- Factories para criação de objetos de teste
+
+## Critérios de Qualidade
+
+### Cobertura de Testes
+- Mínimo 80% de cobertura de código
+- 100% de cobertura para funcionalidades críticas
+- Testes para casos de sucesso e falha
+
+### Performance
+- Testes unitários devem executar rapidamente
+- Suíte completa de testes deve executar em menos de 5 minutos
+- Uso eficiente de mocks
+
+### Manutenibilidade
+- Código de teste limpo e legível
+- Reutilização de código através de helpers
+- Documentação clara dos casos de teste
+
+## Entregáveis
+
+### Código
+- Suíte completa de testes unitários
+- Configurações de build e ambiente
+- Factories e helpers para testes
+- Documentação de convenções
+
+### Documentação
+- Guia de convenções de teste
+- Exemplos de padrões de teste
+- Instruções de execução
+- Troubleshooting guide
+
+## Considerações Especiais
+
+### Compatibilidade Grails 2.5.6
+- Uso de Spock 1.3 (última versão compatível)
+- Configuração específica para Grails 2.x
+- Adaptação de padrões modernos para versão legada
+
+### Integração com Build System
+- Compatibilidade com Grails build system
+- Integração com CI/CD existente
+- Relatórios de cobertura de testes
+
+### Migração Futura
+- Estrutura preparada para migração para Grails 3+
+- Padrões que facilitem atualização do Spock
+- Documentação para facilitar migração

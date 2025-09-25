@@ -13,31 +13,46 @@
 		<link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
 		
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<!-- Bootstrap 5 CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap Icons -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<!-- Bootstrap JS -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<!-- Bootstrap 5 JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		
   		<asset:stylesheet src="application.css"/>
 		<asset:javascript src="application.js"/>
 		<g:layoutHead/>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa; border-bottom: 1px solid #e9ecef;">
 			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="${createLink(uri: '/')}">TODO API</a>
+				<a class="navbar-brand fw-bold text-dark" href="${createLink(uri: '/')}" style="color: #495057 !important;">
+					<i class="bi bi-check2-square me-2" style="color: #6c757d;"></i>TODO API
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="${createLink(controller: 'task', action: 'index')}" style="color: #6c757d !important;">
+								<i class="bi bi-list-ul me-1"></i>Tarefas
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="${createLink(controller: 'task', action: 'create')}" style="color: #6c757d !important;">
+								<i class="bi bi-plus-circle me-1"></i>Nova Tarefa
+							</a>
+						</li>
+					</ul>
 				</div>
-				<ul class="nav navbar-nav">
-					<li><a href="${createLink(controller: 'task', action: 'index')}">Tarefas</a></li>
-					<li><a href="${createLink(controller: 'task', action: 'create')}">Nova Tarefa</a></li>
-				</ul>
 			</div>
 		</nav>
 		
-		<div class="container">
+		<div class="container-fluid px-3 px-md-4 py-4">
 			<g:layoutBody/>
 		</div>
 		

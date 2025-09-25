@@ -1,0 +1,363 @@
+/* ========================================
+   RESPONSIVE CUSTOMIZATIONS
+   ======================================== */
+
+/* Espaçamento superior para separar da navegação */
+
+/* Breakpoints personalizados */
+@media (max-width: 576px) {
+    /* Mobile extra pequeno */
+    .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .card {
+        margin: 0.5rem 0;
+        border-radius: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        padding: 0.375rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .h4 {
+        font-size: 1.25rem;
+    }
+    
+    .h5 {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    /* Mobile pequeno */
+    .card {
+        margin: 1rem 0;
+    }
+    
+    .btn-group .btn {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    /* Tablet */
+    .card {
+        margin: 1.5rem 0;
+    }
+    
+    .table-responsive {
+        font-size: 0.95rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    /* Desktop pequeno */
+    .container-fluid {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Desktop grande */
+    .container-fluid {
+        max-width: 1320px;
+        margin: 0 auto;
+    }
+}
+
+/* ========================================
+   MELHORIAS DE RESPONSIVIDADE
+   ======================================== */
+
+/* Cards responsivos */
+.card {
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    background-color: #ffffff;
+}
+
+.card:hover {
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1) !important;
+    transform: translateY(-1px);
+}
+
+/* Botões responsivos */
+.btn {
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Tabela responsiva melhorada */
+.table-responsive {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+/* Formulários responsivos */
+.form-control:focus,
+.form-select:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* Badges responsivos */
+.badge {
+    font-size: 0.75em;
+    padding: 0.5em 0.75em;
+    border-radius: 0.5rem;
+}
+
+/* Alerts responsivos */
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.alert-dismissible .btn-close {
+    padding: 0.75rem 1rem;
+}
+
+/* Navegação responsiva */
+.navbar {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+    background-color: #f8f9fa !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #495057 !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: all 0.2s ease;
+    color: #6c757d !important;
+}
+
+.nav-link:hover {
+    transform: translateY(-1px);
+    color: #495057 !important;
+}
+
+/* Dropdown responsivo */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+/* Toast responsivo */
+.toast {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+/* ========================================
+   UTILITÁRIOS RESPONSIVOS
+   ======================================== */
+
+/* Espaçamentos responsivos */
+.py-responsive {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .py-responsive {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .py-responsive {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+}
+
+/* Texto responsivo */
+.text-responsive {
+    font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+    .text-responsive {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .text-responsive {
+        font-size: 1.125rem;
+    }
+}
+
+/* Margens responsivas */
+.mb-responsive {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .mb-responsive {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .mb-responsive {
+        margin-bottom: 2rem;
+    }
+}
+
+/* ========================================
+   MELHORIAS DE ACESSIBILIDADE
+   ======================================== */
+
+/* Foco visível */
+.btn:focus,
+.form-control:focus,
+.form-select:focus,
+.nav-link:focus {
+    outline: 2px solid #6c757d;
+    outline-offset: 2px;
+}
+
+/* Contraste melhorado */
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Animações suaves */
+* {
+    transition: color 0.15s ease-in-out, 
+                background-color 0.15s ease-in-out, 
+                border-color 0.15s ease-in-out, 
+                box-shadow 0.15s ease-in-out;
+}
+
+/* ========================================
+   CORREÇÕES ESPECÍFICAS PARA MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Remover hover effects em mobile */
+    .card:hover {
+        transform: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    .nav-link:hover {
+        transform: none;
+    }
+    
+    .dropdown-item:hover {
+        transform: none;
+    }
+    
+    /* Melhorar touch targets */
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .form-check-input {
+        min-width: 20px;
+        min-height: 20px;
+    }
+    
+    /* Ajustar espaçamentos */
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+    .navbar,
+    .btn,
+    .dropdown,
+    .toast-container {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+    }
+    
+    .container-fluid {
+        max-width: none !important;
+        padding: 0 !important;
+    }
+    
+    .table {
+        font-size: 12pt !important;
+    }
+    
+    .badge {
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        color: #000 !important;
+    }
+}

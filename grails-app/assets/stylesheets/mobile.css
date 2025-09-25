@@ -1,17 +1,22 @@
-/* Styles for mobile devices */
+/* Styles for mobile devices - Bootstrap 5 compatible */
 
-@media screen and (max-width: 480px) {
-	.nav {
-		padding: 0.5em;
+@media screen and (max-width: 576px) {
+	/* Navegação mobile */
+	.navbar {
+		padding: 0.5rem;
 	}
 
-	.nav li {
-		margin: 0 0.5em 0 0;
-		padding: 0.25em;
+	.navbar-nav {
+		margin-top: 0.5rem;
 	}
 
-	/* Hide individual steps in pagination, just have next & previous */
-	.pagination .step, .pagination .currentStep {
+	.navbar-nav .nav-item {
+		margin: 0.25rem 0;
+	}
+
+	/* Paginação mobile */
+	.pagination .step, 
+	.pagination .currentStep {
 		display: none;
 	}
 
@@ -23,60 +28,127 @@
 		float: right;
 	}
 
-	/* pagination needs to wrap around floated buttons */
 	.pagination {
 		overflow: hidden;
 	}
 
-	/* slightly smaller margin around content body */
-	fieldset,
-	.property-list {
-		padding: 0.3em 1em 1em;
-	}
-
-	input, textarea {
+	/* Formulários mobile */
+	.form-control,
+	.form-select,
+	textarea {
 		width: 100%;
-		   -moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		    -ms-box-sizing: border-box;
-		        box-sizing: border-box;
+		box-sizing: border-box;
+		font-size: 16px; /* Previne zoom no iOS */
 	}
 
-	select, input[type=checkbox], input[type=radio], input[type=submit], input[type=button], input[type=reset] {
+	/* Botões mobile */
+	.btn {
+		width: 100%;
+		margin-bottom: 0.5rem;
+		min-height: 44px; /* Touch target mínimo */
+	}
+
+	.btn-group .btn {
 		width: auto;
+		margin-bottom: 0;
 	}
 
-	/* hide all but the first column of list tables */
-	.scaffold-list td:not(:first-child),
-	.scaffold-list th:not(:first-child) {
-		display: none;
+	/* Cards mobile */
+	.card {
+		margin: 0.5rem 0;
+		border-radius: 0.5rem;
 	}
 
-	.scaffold-list thead th {
-		text-align: center;
+	.card-body {
+		padding: 1rem;
 	}
 
-	/* stack form elements */
-	.fieldcontain {
-		margin-top: 0.6em;
+	.card-header {
+		padding: 0.75rem 1rem;
 	}
 
-	.fieldcontain label,
-	.fieldcontain .property-label,
-	.fieldcontain .property-value {
-		display: block;
-		float: none;
-		margin: 0 0 0.25em 0;
-		text-align: left;
-		width: auto;
+	/* Tabelas mobile - já tratadas no responsive.css */
+	.table-responsive {
+		font-size: 0.875rem;
 	}
 
-	.errors ul,
-	.message p {
-		margin: 0.5em;
+	/* Alerts mobile */
+	.alert {
+		margin: 0.5rem 0;
+		padding: 0.75rem;
 	}
 
-	.error ul {
-		margin-left: 0;
+	/* Espaçamentos mobile */
+	.container-fluid {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+
+	/* Títulos mobile */
+	.h1, .h2, .h3, .h4, .h5, .h6 {
+		line-height: 1.2;
+		margin-bottom: 0.5rem;
+	}
+
+	/* Badges mobile */
+	.badge {
+		font-size: 0.7em;
+		padding: 0.4em 0.6em;
+	}
+
+	/* Dropdown mobile */
+	.dropdown-menu {
+		width: 100%;
+		left: 0 !important;
+		right: 0 !important;
+		transform: none !important;
+	}
+
+	/* Toast mobile */
+	.toast-container {
+		left: 0.5rem !important;
+		right: 0.5rem !important;
+		width: auto !important;
+	}
+
+	.toast {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+	/* Tablet pequeno */
+	.btn {
+		min-height: 40px;
+	}
+
+	.card {
+		margin: 1rem 0;
+	}
+
+	.container-fluid {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}
+
+/* Melhorias para dispositivos touch */
+@media (hover: none) and (pointer: coarse) {
+	/* Dispositivos touch */
+	.btn:hover {
+		transform: none;
+	}
+
+	.card:hover {
+		transform: none;
+		box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+	}
+
+	.nav-link:hover {
+		transform: none;
+	}
+
+	.dropdown-item:hover {
+		transform: none;
 	}
 }

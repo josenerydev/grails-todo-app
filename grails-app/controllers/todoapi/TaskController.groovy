@@ -11,7 +11,7 @@ class TaskController {
     
     TaskService taskService
     
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", batchUpdateStatus: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE", batchUpdateStatus: "POST"]
 
     /**
      * Lista todas as tarefas
@@ -50,6 +50,11 @@ class TaskController {
     @Transactional
     def save() {
         try {
+            // Converter valores de displayName para enum
+            if (params.priority) {
+                params.priority = convertPriorityToEnum(params.priority)
+            }
+            
             def task = taskService.createTask(params)
             flash.message = "Tarefa criada com sucesso"
             redirect action: "show", id: task.id
@@ -80,13 +85,44 @@ class TaskController {
     @Transactional
     def update() {
         try {
+            // Converter valores de displayName para enum
+            if (params.status) {
+                params.status = convertStatusToEnum(params.status)
+            }
+            if (params.priority) {
+                params.priority = convertPriorityToEnum(params.priority)
+            }
+            
             def task = taskService.updateTask(params.id as Long, params)
             flash.message = "Tarefa atualizada com sucesso"
             redirect action: "show", id: task.id
         } catch (Exception e) {
             flash.error = "Erro ao atualizar tarefa: ${e.message}"
-            def task = taskService.getTaskById(params.id as Long)
-            [task: task]
+            redirect action: "edit", id: params.id
+        }
+    }
+    
+    private TaskStatus convertStatusToEnum(String statusValue) {
+        switch(statusValue) {
+            case "Pendente":
+                return TaskStatus.PENDING
+            case "Concluída":
+                return TaskStatus.COMPLETED
+            default:
+                return TaskStatus.valueOf(statusValue)
+        }
+    }
+    
+    private TaskPriority convertPriorityToEnum(String priorityValue) {
+        switch(priorityValue) {
+            case "Baixa":
+                return TaskPriority.LOW
+            case "Média":
+                return TaskPriority.MEDIUM
+            case "Alta":
+                return TaskPriority.HIGH
+            default:
+                return TaskPriority.valueOf(priorityValue)
         }
     }
 

@@ -37,7 +37,11 @@ fi
 
 echo "MySQL está rodando!"
 
-# 4. Executar testes de integração com MySQL
+# 4. Executar grails clean antes dos testes
+echo "Executando grails clean..."
+grails clean
+
+# 5. Executar testes de integração com MySQL
 echo "Executando testes de integração com MySQL..."
 GRAILS_OPTS="-Dgrails.datasource.url=jdbc:mysql://localhost:3307/todo_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true -Dgrails.datasource.username=todo_user -Dgrails.datasource.password=password -Dgrails.datasource.driverClassName=com.mysql.cj.jdbc.Driver" grails test-app integration: -coverage
 

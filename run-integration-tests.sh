@@ -24,18 +24,28 @@ fi
 
 # 2. Aguardar MySQL estar pronto
 echo "Aguardando MySQL estar pronto..."
-sleep 30
+sleep 20
 
-# 3. Verificar se MySQL está rodando
+# 3. Verificar se MySQL está rodando (com retry)
 echo "Verificando se MySQL está rodando..."
-docker exec todo-mysql-test mysqladmin ping -h localhost -u root -ppassword
+MAX_ATTEMPTS=30
+ATTEMPT=1
 
-if [ $? -ne 0 ]; then
-    echo "ERRO: MySQL não está respondendo"
-    exit 1
-fi
-
-echo "MySQL está rodando!"
+while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+    echo "Tentativa $ATTEMPT/$MAX_ATTEMPTS..."
+    if docker exec todo-mysql-test mysqladmin ping -h localhost -u root -ppassword > /dev/null 2>&1; then
+        echo "MySQL está rodando!"
+        break
+    fi
+    
+    if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+        echo "ERRO: MySQL não está respondendo após $MAX_ATTEMPTS tentativas"
+        exit 1
+    fi
+    
+    sleep 2
+    ATTEMPT=$((ATTEMPT + 1))
+done
 
 # 4. Executar grails clean antes dos testes
 echo "Executando grails clean..."
@@ -43,7 +53,7 @@ grails clean
 
 # 5. Executar testes de integração com MySQL
 echo "Executando testes de integração com MySQL..."
-GRAILS_OPTS="-Dgrails.datasource.url=jdbc:mysql://localhost:3307/todo_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true -Dgrails.datasource.username=todo_user -Dgrails.datasource.password=password -Dgrails.datasource.driverClassName=com.mysql.cj.jdbc.Driver" grails test-app integration: -coverage
+grails test-app integration: -coverage
 
 # 6. Capturar resultado
 TEST_RESULT=$?

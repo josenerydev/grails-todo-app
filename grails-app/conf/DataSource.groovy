@@ -25,17 +25,19 @@ environments {
     test {
         dataSource {
             dbCreate = "create-drop" // Garante um banco de dados limpo para cada execução de teste
-            // Usar MySQL via Docker Compose se configurado, senão H2
-            url = System.getProperty("grails.datasource.url") ?: "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-            driverClassName = System.getProperty("grails.datasource.driverClassName") ?: "org.h2.Driver"
-            username = System.getProperty("grails.datasource.username") ?: "sa"
-            password = System.getProperty("grails.datasource.password") ?: ""
+            url = "jdbc:mysql://localhost:3307/todo_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+            driverClassName = "com.mysql.cj.jdbc.Driver"
+            username = "todo_user"
+            password = "password"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost:3306/todo_prod?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC"
+            driverClassName = "com.mysql.cj.jdbc.Driver"
+            username = "todo_user"
+            password = "password"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true

@@ -11,7 +11,7 @@ import spock.lang.Specification
 class TaskSpec extends Specification {
 
     def setup() {
-        // Configurar H2 in-memory para testes de domínio
+        // Configurar mocks para testes de domínio
         mockForConstraintsTests(Task)
     }
 

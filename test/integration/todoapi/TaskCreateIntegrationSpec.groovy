@@ -9,10 +9,7 @@ class TaskCreateIntegrationSpec extends Specification {
 
     def setupSpec() {
         println "=== TESTE DE INTEGRAÇÃO INICIADO ==="
-        
-        def url = System.getProperty("grails.datasource.url") ?: "jdbc:h2:mem:testDb"
-        def username = System.getProperty("grails.datasource.username") ?: "sa"
-        def driver = System.getProperty("grails.datasource.driverClassName") ?: "org.h2.Driver"
+        println "Usando MySQL para testes de integração"
     }
 
     def "criarTarefa_ComDadosValidos_DeveRetornarTarefaCriada"() {

@@ -54,9 +54,6 @@ grails.project.dependency.resolution = {
         test 'org.spockframework:spock-core:1.0-groovy-2.4'
         test 'org.spockframework:spock-spring:1.0-groovy-2.4'
         
-        // H2 Database para testes unitários
-        test 'com.h2database:h2:1.4.200'
-        
         // GORM Testing Support
         test 'org.grails:grails-datastore-test-support:1.0.2-grails-2.4'
         

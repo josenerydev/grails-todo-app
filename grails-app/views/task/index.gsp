@@ -105,7 +105,7 @@
                                 </td>
                                 <td><g:formatDate date="${task.dateCreated}" format="dd/MM/yyyy HH:mm"/></td>
                                 <td>
-                                    <div class="btn-group" role="group">
+                                    <div class="d-flex gap-2">
                                         <g:link controller="task" action="show" id="${task.id}" class="btn btn-sm btn-info" title="Visualizar">
                                             <i class="bi bi-eye"></i>
                                         </g:link>

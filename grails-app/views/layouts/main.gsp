@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+<!--[if lt IE 7 ]> <html lang="pt-BR" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="pt-BR" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="pt-BR" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="pt-BR" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="pt-BR" class="no-js"><!--<![endif]-->
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -26,37 +26,59 @@
 		<asset:javascript src="application.js"/>
 		<g:layoutHead/>
 	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa; border-bottom: 1px solid #e9ecef;">
-			<div class="container-fluid">
-				<a class="navbar-brand fw-bold text-dark" href="${createLink(uri: '/')}" style="color: #495057 !important;">
-					<i class="bi bi-check2-square me-2" style="color: #6c757d;"></i>TODO API
+	<body class="d-flex flex-column min-vh-100">
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container-fluid px-4">
+				<a class="navbar-brand fw-bold" href="${createLink(uri: '/')}">
+					<i class="bi bi-check2-square me-2"></i>TODO API
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ms-auto">
+					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="${createLink(controller: 'task', action: 'index')}" style="color: #6c757d !important;">
+							<a class="nav-link ${controllerName == 'index' ? 'active' : ''}" href="${createLink(uri: '/')}">
+								<i class="bi bi-house me-1"></i>Dashboard
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link ${controllerName == 'task' && actionName == 'index' ? 'active' : ''}" href="${createLink(controller: 'task', action: 'index')}">
 								<i class="bi bi-list-ul me-1"></i>Tarefas
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="${createLink(controller: 'task', action: 'create')}" style="color: #6c757d !important;">
+							<a class="nav-link ${controllerName == 'task' && actionName == 'create' ? 'active' : ''}" href="${createLink(controller: 'task', action: 'create')}">
 								<i class="bi bi-plus-circle me-1"></i>Nova Tarefa
 							</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<span class="navbar-text">
+								Sistema de Gerenciamento de Tarefas
+							</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+
+		<!-- Main Content -->
+		<main class="flex-grow-1">
+			<div class="container-fluid px-4 py-4">
+				<g:layoutBody/>
+			</div>
+		</main>
 		
-		<div class="container-fluid px-3 px-md-4 py-4">
-			<g:layoutBody/>
-		</div>
+		<!-- Footer -->
+		<footer class="bg-light text-center text-muted py-3 mt-auto">
+			<div class="container-fluid px-4">
+				<small>&copy; 2024 TODO API - Sistema de Gerenciamento de Tarefas</small>
+			</div>
+		</footer>
 		
-		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>
 </html>

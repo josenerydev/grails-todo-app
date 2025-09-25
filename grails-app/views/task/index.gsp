@@ -6,44 +6,63 @@
 </head>
 <body>
 
-<div class="row" style="margin-top: 1rem;">
+<!-- Page Header -->
+<div class="row mb-4">
     <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h2 mb-0">
-                <i class="bi bi-list-ul me-2"></i>Lista de Tarefas
-            </h1>
-            <g:link controller="task" action="create" class="btn" style="background-color: #6c757d; border-color: #6c757d; color: white;">
-                <i class="bi bi-plus-circle me-1"></i>Nova Tarefa
-            </g:link>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="card-title mb-1">
+                            <i class="bi bi-list-ul me-2"></i>Lista de Tarefas
+                        </h1>
+                        <p class="card-text text-muted mb-0">Gerencie todas as suas tarefas</p>
+                    </div>
+                    <g:link controller="task" action="create" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Nova Tarefa
+                    </g:link>
+                </div>
+            </div>
         </div>
-        
-        <g:if test="${flash.message}">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle me-2"></i>${flash.message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </g:if>
-        
-        <g:if test="${flash.error}">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle me-2"></i>${flash.error}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </g:if>
-        
-        <div class="row mb-3">
-            <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <button id="markCompletedBtn" class="btn w-100" style="background-color: #28a745; border-color: #28a745; color: white;" disabled>
+    </div>
+</div>
+
+<!-- Alerts -->
+<g:if test="${flash.message}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>${flash.message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</g:if>
+
+<g:if test="${flash.error}">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>${flash.error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</g:if>
+
+<!-- Batch Actions -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <button id="markCompletedBtn" class="btn btn-success" disabled>
                     <i class="bi bi-check-circle me-1"></i>Marcar como Concluído
                 </button>
             </div>
         </div>
-        
-        <g:if test="${taskList && !taskList.empty}">
-            <!-- Desktop Table View -->
-            <div class="table-responsive d-none d-lg-block">
-                <table class="table table-striped table-hover">
-                    <thead style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+    </div>
+</div>
+
+<!-- Tasks List -->
+<g:if test="${taskList && !taskList.empty}">
+    <!-- Desktop Table View -->
+    <div class="card d-none d-lg-block">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
                             <th width="50">
                                 <input type="checkbox" id="selectAll" class="form-check-input">
@@ -63,26 +82,26 @@
                                 </td>
                                 <td class="fw-bold">${task.title}</td>
                                 <td>
-                                    <span class="badge" style="background-color: ${task.status == 'COMPLETED' ? '#28a745' : '#ffc107'}; color: ${task.status == 'COMPLETED' ? 'white' : '#212529'};">
+                                    <span class="badge ${task.status == 'COMPLETED' ? 'bg-success' : 'bg-warning text-dark'}">
                                         ${task.status}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge" style="background-color: ${task.priority == 'HIGH' ? '#dc3545' : task.priority == 'MEDIUM' ? '#ffc107' : '#6c757d'}; color: ${task.priority == 'MEDIUM' ? '#212529' : 'white'};">
+                                    <span class="badge ${task.priority == 'HIGH' ? 'bg-danger' : task.priority == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-secondary'}">
                                         ${task.priority}
                                     </span>
                                 </td>
                                 <td><g:formatDate date="${task.dateCreated}" format="dd/MM/yyyy HH:mm"/></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <g:link controller="task" action="show" id="${task.id}" class="btn btn-sm" style="background-color: #17a2b8; border-color: #17a2b8; color: white;" title="Visualizar">
+                                        <g:link controller="task" action="show" id="${task.id}" class="btn btn-sm btn-info" title="Visualizar">
                                             <i class="bi bi-eye"></i>
                                         </g:link>
-                                        <g:link controller="task" action="edit" id="${task.id}" class="btn btn-sm" style="background-color: #ffc107; border-color: #ffc107; color: #212529;" title="Editar">
+                                        <g:link controller="task" action="edit" id="${task.id}" class="btn btn-sm btn-warning" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </g:link>
                                         <g:form controller="task" action="delete" id="${task.id}" method="DELETE" style="display: inline;">
-                                            <button type="submit" class="btn btn-sm" style="background-color: #dc3545; border-color: #dc3545; color: white;"
+                                            <button type="submit" class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')" title="Excluir">
                                                 <i class="bi bi-trash"></i>
                                             </button>
@@ -94,76 +113,78 @@
                     </tbody>
                 </table>
             </div>
-            
-            <!-- Mobile Card View -->
-            <div class="d-lg-none">
-                <g:each in="${taskList}" var="task">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="form-check">
-                                    <input type="checkbox" name="selectedTaskIds" value="${task.id}" class="task-checkbox form-check-input" id="task-${task.id}">
-                                    <label class="form-check-label fw-bold" for="task-${task.id}">
-                                        ${task.title}
-                                    </label>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><g:link controller="task" action="show" id="${task.id}" class="dropdown-item">
-                                            <i class="bi bi-eye me-2"></i>Visualizar
-                                        </g:link></li>
-                                        <li><g:link controller="task" action="edit" id="${task.id}" class="dropdown-item">
-                                            <i class="bi bi-pencil me-2"></i>Editar
-                                        </g:link></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <g:form controller="task" action="delete" id="${task.id}" method="DELETE" style="display: inline;">
-                                                <button type="submit" class="dropdown-item text-danger" 
-                                                        onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')" style="border: none; background: none; width: 100%; text-align: left;">
-                                                    <i class="bi bi-trash me-2"></i>Excluir
-                                                </button>
-                                            </g:form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <span class="badge w-100" style="background-color: ${task.status == 'COMPLETED' ? '#28a745' : '#ffc107'}; color: ${task.status == 'COMPLETED' ? 'white' : '#212529'};">
-                                        ${task.status}
-                                    </span>
-                                </div>
-                                <div class="col-6">
-                                    <span class="badge w-100" style="background-color: ${task.priority == 'HIGH' ? '#dc3545' : task.priority == 'MEDIUM' ? '#ffc107' : '#6c757d'}; color: ${task.priority == 'MEDIUM' ? '#212529' : 'white'};">
-                                        ${task.priority}
-                                    </span>
-                                </div>
-                            </div>
-                            <small class="text-muted d-block mt-2">
-                                <i class="bi bi-calendar me-1"></i><g:formatDate date="${task.dateCreated}" format="dd/MM/yyyy HH:mm"/>
-                            </small>
+        </div>
+    </div>
+    
+    <!-- Mobile Card View -->
+    <div class="d-lg-none">
+        <g:each in="${taskList}" var="task">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="form-check">
+                            <input type="checkbox" name="selectedTaskIds" value="${task.id}" class="task-checkbox form-check-input" id="task-${task.id}">
+                            <label class="form-check-label fw-bold" for="task-${task.id}">
+                                ${task.title}
+                            </label>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><g:link controller="task" action="show" id="${task.id}" class="dropdown-item">
+                                    <i class="bi bi-eye me-2"></i>Visualizar
+                                </g:link></li>
+                                <li><g:link controller="task" action="edit" id="${task.id}" class="dropdown-item">
+                                    <i class="bi bi-pencil me-2"></i>Editar
+                                </g:link></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <g:form controller="task" action="delete" id="${task.id}" method="DELETE" style="display: inline;">
+                                        <button type="submit" class="dropdown-item text-danger" 
+                                                onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')" style="border: none; background: none; width: 100%; text-align: left;">
+                                            <i class="bi bi-trash me-2"></i>Excluir
+                                        </button>
+                                    </g:form>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </g:each>
-            </div>
-        </g:if>
-        <g:else>
-            <div class="text-center py-5">
-                <div class="mb-4">
-                    <i class="bi bi-clipboard-x display-1 text-muted"></i>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <span class="badge w-100 ${task.status == 'COMPLETED' ? 'bg-success' : 'bg-warning text-dark'}">
+                                ${task.status}
+                            </span>
+                        </div>
+                        <div class="col-6">
+                            <span class="badge w-100 ${task.priority == 'HIGH' ? 'bg-danger' : task.priority == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-secondary'}">
+                                ${task.priority}
+                            </span>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-2">
+                        <i class="bi bi-calendar me-1"></i><g:formatDate date="${task.dateCreated}" format="dd/MM/yyyy HH:mm"/>
+                    </small>
                 </div>
-                <h3 class="text-muted mb-3">Nenhuma tarefa encontrada</h3>
-                <p class="text-muted mb-4">Comece criando sua primeira tarefa para organizar suas atividades.</p>
-                <g:link controller="task" action="create" class="btn btn-lg" style="background-color: #6c757d; border-color: #6c757d; color: white;">
-                    <i class="bi bi-plus-circle me-2"></i>Nova Tarefa
-                </g:link>
             </div>
-        </g:else>
+        </g:each>
     </div>
-</div>
+</g:if>
+<g:else>
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <div class="mb-4">
+                <i class="bi bi-clipboard-x display-1 text-muted"></i>
+            </div>
+            <h3 class="text-muted mb-3">Nenhuma tarefa encontrada</h3>
+            <p class="text-muted mb-4">Comece criando sua primeira tarefa para organizar suas atividades.</p>
+            <g:link controller="task" action="create" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>Nova Tarefa
+            </g:link>
+        </div>
+    </div>
+</g:else>
 
 <script>
 $(document).ready(function() {
@@ -198,7 +219,6 @@ $(document).ready(function() {
         });
 
         if (selectedTaskIds.length === 0) {
-            // Usar toast do Bootstrap 5 em vez de alert
             showToast('Aviso', 'Selecione pelo menos uma tarefa para realizar a ação.', 'warning');
             return;
         }

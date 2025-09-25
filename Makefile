@@ -1,7 +1,7 @@
 # Makefile para Todo API - Grails 2.5.6
 # Comandos disponíveis: make help
 
-.PHONY: help test-up test-down test-wait test-integration test-clean dev-up dev-down clean all-tests
+.PHONY: help test-up test-down test-wait test-integration test-clean dev-up dev-down clean all-tests stop-grails
 
 # Variáveis
 DOCKER_COMPOSE_TEST = docker-compose -f docker-compose.test.yml
@@ -33,6 +33,7 @@ help: ## Mostra esta ajuda
 	@echo "$(GREEN)Utilitários:$(NC)"
 	@echo "  make clean      - Limpa todos os containers e volumes"
 	@echo "  make logs       - Mostra logs do container de teste"
+	@echo "  make stop-grails - Para todos os processos Grails em execução"
 	@echo ""
 
 # ===========================================
@@ -57,6 +58,7 @@ dev-down: ## Para ambiente de desenvolvimento
 	else \
 		echo "$(YELLOW)Arquivo docker-compose.yml não encontrado.$(NC)"; \
 	fi
+	@$(MAKE) stop-grails
 
 # ===========================================
 # CONTAINER DE TESTE
@@ -139,8 +141,14 @@ logs: ## Mostra logs do container de teste
 	@echo "$(BLUE)=== LOGS DO CONTAINER DE TESTE ===$(NC)"
 	@$(DOCKER_COMPOSE_TEST) logs -f
 
+stop-grails: ## Para todos os processos Grails em execução
+	@echo "$(BLUE)=== PARANDO PROCESSOS GRAILS ===$(NC)"
+	@pkill -f grails || echo "$(YELLOW)Nenhum processo Grails encontrado$(NC)"
+	@echo "$(GREEN)Processos Grails parados!$(NC)"
+
 clean: test-down ## Limpa todos os containers e volumes
 	@echo "$(BLUE)=== LIMPANDO TUDO ===$(NC)"
+	@$(MAKE) stop-grails
 	@docker system prune -f
 	@echo "$(GREEN)Limpeza concluída!$(NC)"
 

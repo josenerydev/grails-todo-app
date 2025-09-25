@@ -64,16 +64,16 @@
 @media (min-width: 992px) and (max-width: 1200px) {
     /* Desktop pequeno */
     .container-fluid {
-        max-width: 1140px;
-        margin: 0 auto;
+        max-width: none;
+        margin: 0;
     }
 }
 
 @media (min-width: 1200px) {
     /* Desktop grande */
     .container-fluid {
-        max-width: 1320px;
-        margin: 0 auto;
+        max-width: none;
+        margin: 0;
     }
 }
 

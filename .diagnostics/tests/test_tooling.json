@@ -1,0 +1,143 @@
+{
+  "projectRoot": "/home/josenerydev/repos/asaas/grails-todo-app",
+  "testFrameworks": [
+    {
+      "name": "Spock",
+      "version": "1.0-groovy-2.4",
+      "confidence": 1.0,
+      "evidence": [
+        "BuildConfig.groovy:54 - test 'org.spockframework:spock-core:1.0-groovy-2.4'",
+        "BuildConfig.groovy:55 - test 'org.spockframework:spock-spring:1.0-groovy-2.4'",
+        "TaskServiceSpec.groovy:5 - import spock.lang.Specification",
+        "BaseIntegrationSpec.groovy:4 - import spock.lang.Specification"
+      ],
+      "capabilities": [
+        "Unit Testing",
+        "Integration Testing",
+        "BDD Style Tests",
+        "Data Driven Tests",
+        "Mocking Support"
+      ]
+    }
+  ],
+  "mockingFrameworks": [
+    {
+      "name": "Grails Test Mixins",
+      "version": "Built-in",
+      "confidence": 1.0,
+      "evidence": [
+        "TaskServiceSpec.groovy:3 - import grails.test.mixin.TestFor",
+        "TaskServiceSpec.groovy:4 - import grails.test.mixin.Mock",
+        "TaskServiceSpec.groovy:11 - @TestFor(TaskService)",
+        "TaskServiceSpec.groovy:12 - @Mock(Task)"
+      ],
+      "capabilities": [
+        "Domain Object Mocking",
+        "Service Injection",
+        "Controller Testing",
+        "Integration Testing"
+      ]
+    }
+  ],
+  "coverageTools": [
+    {
+      "name": "Code Coverage Plugin",
+      "version": "2.0.3-2",
+      "confidence": 1.0,
+      "evidence": [
+        "BuildConfig.groovy:86 - test ':code-coverage:2.0.3-2'",
+        "BuildConfig.groovy:97-107 - coverage configuration block",
+        "cobertura.ser - coverage data file present"
+      ],
+      "capabilities": [
+        "Line Coverage",
+        "Branch Coverage",
+        "Method Coverage",
+        "Class Coverage",
+        "Exclusion Rules"
+      ],
+      "exclusions": [
+        "**/grails/app/conf/**",
+        "**/grails/app/views/**",
+        "**/grails/app/controllers/**/*Controller.groovy",
+        "**/grails/app/domain/**/*Constraints.groovy",
+        "**/grails/app/utils/**",
+        "**/grails/app/taglib/**",
+        "**/grails/app/services/**/*Service.groovy"
+      ]
+    }
+  ],
+  "integrationTesting": [
+    {
+      "name": "TestContainers",
+      "version": "1.15.3",
+      "confidence": 1.0,
+      "evidence": [
+        "BuildConfig.groovy:61 - test 'org.testcontainers:testcontainers:1.15.3'",
+        "BuildConfig.groovy:62 - test 'org.testcontainers:mysql:1.15.3'",
+        "BuildConfig.groovy:63 - test 'org.testcontainers:spock:1.15.3'"
+      ],
+      "capabilities": [
+        "Database Container Testing",
+        "MySQL Integration",
+        "Spock Integration"
+      ]
+    },
+    {
+      "name": "Grails Integration Testing",
+      "version": "Built-in",
+      "confidence": 1.0,
+      "evidence": [
+        "BaseIntegrationSpec.groovy:3 - import grails.test.mixin.integration.Integration",
+        "BaseIntegrationSpec.groovy:7 - @Integration",
+        "BaseIntegrationSpec.groovy:12 - Task.deleteAll() cleanup"
+      ],
+      "capabilities": [
+        "Full Application Context",
+        "Database Integration",
+        "Service Integration",
+        "Controller Integration"
+      ]
+    }
+  ],
+  "httpTesting": [
+    {
+      "name": "Apache HTTP Client",
+      "version": "4.5.13",
+      "confidence": 1.0,
+      "evidence": [
+        "BuildConfig.groovy:66 - test 'org.apache.httpcomponents:httpclient:4.5.13'",
+        "BuildConfig.groovy:67 - test 'org.apache.httpcomponents:httpmime:4.5.13'"
+      ],
+      "capabilities": [
+        "HTTP Client Testing",
+        "REST API Testing",
+        "Multipart Testing"
+      ]
+    }
+  ],
+  "testStructure": {
+    "unitTests": {
+      "path": "test/unit/",
+      "count": 7,
+      "files": [
+        "todoapi/TaskServiceSpec.groovy",
+        "todoapi/TaskControllerSpec.groovy",
+        "todoapi/TaskRestControllerSpec.groovy",
+        "todoapi/TaskSpec.groovy",
+        "todoapi/TaskStatusSpec.groovy",
+        "todoapi/TaskPrioritySpec.groovy",
+        "todoapi/TaskTestFactory.groovy"
+      ]
+    },
+    "integrationTests": {
+      "path": "test/integration/",
+      "count": 2,
+      "files": [
+        "todoapi/BaseIntegrationSpec.groovy",
+        "todoapi/TaskCreateIntegrationSpec.groovy"
+      ]
+    }
+  },
+  "generatedAt": "2025-01-27T20:30:00Z"
+}

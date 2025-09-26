@@ -1,0 +1,37 @@
+# Test Gap Resolutions History
+# Generated at: 2025-01-27T20:35:00Z
+
+resolutions:
+  - id: "junit5_migration"
+    timestamp: "2025-01-27T20:35:00Z"
+    status: "wontfix"
+    decision: "maintain_current"
+    rationale: "Current Spock version is stable and compatible with Grails 2.5.6. Migration can be considered during future Grails upgrade."
+    user_input: "manter"
+    
+  - id: "test_data_builders"
+    timestamp: "2025-01-27T20:35:00Z"
+    status: "wontfix"
+    decision: "maintain_current"
+    rationale: "Current TaskTestFactory meets current testing needs. Enhancement can be added incrementally if needed."
+    user_input: "manter"
+    
+  - id: "performance_testing"
+    timestamp: "2025-01-27T20:35:00Z"
+    status: "wontfix"
+    decision: "maintain_current"
+    rationale: "Performance testing not required for current scope. Can be added later if performance becomes a concern."
+    user_input: "manter"
+    
+  - id: "contract_testing"
+    timestamp: "2025-01-27T20:35:00Z"
+    status: "wontfix"
+    decision: "maintain_current"
+    rationale: "Current API testing with HTTP client is sufficient. Contract testing can be added if multiple consumers are introduced."
+    user_input: "manter"
+
+# Summary
+total_enhancements_evaluated: 4
+decisions_made: 4
+maintain_current_decisions: 4
+wontfix_decisions: 4

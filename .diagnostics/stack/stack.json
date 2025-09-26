@@ -1,0 +1,37 @@
+{
+  "projectRoot": "/home/josenerydev/repos/asaas/grails-todo-app",
+  "stacks": [
+    {
+      "name": "Groovy/Grails",
+      "confidence": 1.0,
+      "artifacts": {
+        "buildFiles": ["grails-app/conf/BuildConfig.groovy"],
+        "wrapper": null,
+        "grailsApp": "grails-app",
+        "configFiles": ["grails-app/conf/Config.groovy", "application.properties"]
+      },
+      "properties": {
+        "gradleVersion": null,
+        "grailsVersion": "2.5.6",
+        "javaVersion": "1.6",
+        "sourceCompatibility": "1.6",
+        "targetCompatibility": "1.6",
+        "servletVersion": "3.0",
+        "appName": "todo-api",
+        "appVersion": "0.1"
+      },
+      "dependencies": {
+        "database": "mysql:mysql-connector-java:8.0.33",
+        "orm": "hibernate4:4.3.10",
+        "migration": "database-migration:1.4.0"
+      }
+    }
+  ],
+  "otherSignals": {
+    "node": { "packageJson": false },
+    "maven": { "pomXml": false },
+    "python": { "pyprojectToml": false },
+    "gradle": { "buildGradle": false, "settingsGradle": false }
+  },
+  "generatedAt": "2025-01-27T20:30:00Z"
+}

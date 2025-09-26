@@ -23,6 +23,44 @@ Sistema de gerenciamento de tarefas desenvolvido com Grails 2.5.6, incluindo API
 - Grails 2.5.6
 - Docker
 
+## Setup via SDKMAN
+
+### Instalação do SDKMAN
+
+```bash
+# Instalar SDKMAN
+curl -s "https://get.sdkman.io" | bash
+
+# Recarregar o terminal ou executar
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+```
+
+### Instalação do Java e Grails
+
+```bash
+# Instalar Java 8 (versão compatível com Grails 2.5.6)
+sdk install java 8.0.442-tem
+
+# Instalar Grails 2.5.6
+sdk install grails 2.5.6
+
+# Verificar instalações
+java -version
+grails -version
+```
+
+### Configuração do Ambiente
+
+```bash
+# Definir versões padrão (opcional)
+sdk default java 8.0.442-tem
+sdk default grails 2.5.6
+
+# Listar versões instaladas
+sdk list java
+sdk list grails
+```
+
 ## Instalação
 
 ```bash

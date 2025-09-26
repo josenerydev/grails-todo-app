@@ -30,3 +30,4 @@ node_modules/
 target/
 cobertura.ser
 .asscache
+.cursor/mcp.json

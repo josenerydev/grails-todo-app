@@ -4,18 +4,23 @@ Sistema de gerenciamento de tarefas desenvolvido com Grails 2.5.6, incluindo API
 
 ## Funcionalidades
 
-- CRUD de tarefas
-- API REST
-- Interface web
-- Status e prioridades
-- Ações em lote
+- **CRUD de tarefas** - Criação, leitura, atualização e exclusão de tarefas
+- **API REST** - Endpoints RESTful para integração com outros sistemas
+- **Interface web** - Interface gráfica para gerenciamento de tarefas
+- **Status e prioridades** - Controle de status (PENDING, COMPLETED) e prioridades (LOW, MEDIUM, HIGH)
+- **Ações em lote** - Atualização de status de múltiplas tarefas simultaneamente
+- **Validação de dados** - Validação automática de campos obrigatórios e formatos
+- **Testes automatizados** - Cobertura completa com testes unitários e de integração
 
 ## Tecnologias
 
-- Grails 2.5.6
-- Groovy 2.4
-- MySQL 8.0 (Docker)
-- Bootstrap 3
+- **Grails 2.5.6** - Framework web para Groovy
+- **Groovy 2.4** - Linguagem de programação
+- **MySQL 8.0** - Banco de dados (via Docker)
+- **Bootstrap 3** - Framework CSS para interface
+- **Spock Framework** - Framework de testes
+- **TestContainers** - Testes de integração com containers
+- **Docker** - Containerização e ambiente de desenvolvimento
 
 ## Pré-requisitos
 
@@ -220,16 +225,27 @@ todo-api/
 ├── docker-compose.yml
 ├── grails-app/
 │   ├── conf/                    # Configurações
-│   ├── controllers/todoapi/     # Controllers
-│   ├── domain/todoapi/          # Domínio
-│   ├── services/todoapi/        # Serviços
+│   ├── controllers/todoapi/     # Controllers (TaskController, TaskRestController)
+│   ├── domain/todoapi/          # Domínio (Task)
+│   ├── services/todoapi/        # Serviços (TaskService)
 │   └── views/                   # Views
-├── src/groovy/todoapi/          # Enums
+├── src/groovy/todoapi/          # Enums (TaskStatus, TaskPriority)
 ├── test/
 │   ├── unit/todoapi/            # Testes unitários
 │   └── integration/todoapi/     # Testes de integração
 └── specs/                       # Especificações e documentação
 ```
+
+## Serviços Implementados
+
+### TaskService
+Serviço principal para gerenciamento de operações de negócio relacionadas às tarefas:
+
+- `listAllTasks()` - Lista todas as tarefas
+- `getTaskById(Long id)` - Busca tarefa por ID
+- `createTask(Map params)` - Cria nova tarefa
+- `updateTask(Long id, Map params)` - Atualiza tarefa existente
+- `deleteTask(Long id)` - Exclui tarefa
 
 ## Modelo de Dados
 
